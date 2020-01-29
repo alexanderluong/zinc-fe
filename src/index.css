@@ -1,0 +1,29 @@
+
+@font-face {
+  font-family: 'Circular Book';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/circular-book.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Circular Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/circular-bold.otf') format('opentype');
+}
+
+:root {
+  --main-color: #3e52d9;
+  --main-color-light: #6874c4;
+  --bg-color-white: #ffffff;
+  --bg-color-gray: rgb(244, 240, 240);
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
