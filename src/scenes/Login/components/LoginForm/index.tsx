@@ -1,10 +1,8 @@
 import React from "react";
 import { Button, TextField } from "@material-ui/core";
 
-import AuthIllustration from "../../assets/images/auth.png";
 import { auth } from "services/users/api";
 import "./style.css";
-import { Redirect } from "react-router-dom";
 
 export interface LoginFormProps {
   [key: string]: any; // TODO
@@ -38,15 +36,11 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
   }
 
   async onLogin() {
-    console.log("a");
     this.setState({ isLoading: true });
 
     // TODO: Refactor below with redux/redux-thunk, try/catch and pass result as prop
     let res = await auth(this.state.email, this.state.password);
-    console.log("c");
     this.setState({ isLoading: false });
-
-    console.log(await res.json());
 
     // Handle
     if (res.ok) this.setState({ isLoggedIn: true });
