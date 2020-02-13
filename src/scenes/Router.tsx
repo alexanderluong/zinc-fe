@@ -1,15 +1,27 @@
-import React from 'react';
-import { Route, BrowserRouter } from 'react-router-dom'
+import React from "react";
+import { Route, BrowserRouter, Switch } from "react-router-dom";
 
-import { LoginScene } from './Login';
-import { FeedScene } from './Feed';
-
+import { LoginScene } from "./Login";
+import { FeedScene } from "./Feed";
+import { NotFoundScene } from "./NotFound";
+import { SubmitPostScene } from "./SubmitPost";
+import NavBar from "../components/navbar";
 
 export const Router: React.FC<{}> = () => {
   return (
     <BrowserRouter>
-        <Route exact path="/" component={LoginScene} />
-        <Route exact path="/feed" component={FeedScene} />
+      <React.Fragment>
+        <NavBar />
+        <div>
+          <Switch>
+            <Route exact path="/" component={FeedScene} />
+            <Route exact path="/login" component={LoginScene} />
+            <Route exact path="/feed" component={FeedScene} />
+            <Route exact path="/submit" component={SubmitPostScene} />
+            <Route exact path="*" component={NotFoundScene} status={404} />
+          </Switch>
+        </div>
+      </React.Fragment>
     </BrowserRouter>
   );
 };
