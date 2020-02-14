@@ -48,9 +48,7 @@ class Feed extends React.Component<FeedProps, FeedState> {
               <a href={article.uri}>{article.title}</a>
             </div>
             {article.categories.map((tag: string) => (
-              <div key={tag}>
-                <TagContainer tagName={tag} key={tag} />
-              </div>
+              <TagContainer tagName={tag} key={tag} />
             ))}
           </div>
         ))}

@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles, createStyles, Theme } from "@material-ui/core";
 import "./tag.css";
 
 export interface TagContainerProps {
@@ -12,18 +11,14 @@ class TagContainer extends React.Component<
   TagContainerProps,
   TagContainerState
 > {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      tagName: ""
-    };
-  }
-
   render() {
+    const path: string = "/tags/" + this.props.tagName;
     return (
-      <a href="/tags/{this.props.tagName}">
-        <span className="tag">#{this.props.tagName}</span>
-      </a>
+      <React.Fragment>
+        <a href={path}>
+          <span className="tag">{this.props.tagName}</span>
+        </a>
+      </React.Fragment>
     );
   }
 }

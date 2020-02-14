@@ -32,6 +32,21 @@ body {
 
 .container {
   padding-top: 30px;
-  margin-left: 60px;
-  margin-right: 60px;
+  margin-left: 10vw;
+  margin-right: 10vw;
+}
+
+::-moz-selection {
+  background: #f15690;
+  color: white;
+}
+::selection {
+  background: #f15690;
+  color: white;
+}
+
+.main-site-title:hover {
+  text-shadow: 1px 1px #f15690;
+  text-decoration: underline;
+  transition: text-shadow 1s;
 }

@@ -63,7 +63,7 @@ class SubmitForm extends React.Component<SubmitFormProps, SubmitFormState> {
   render() {
     return (
       <div id="form-submission">
-        <h3>Submit a new post.</h3>
+        <h3 className="section-heading">Submit a new post.</h3>
         <form autoComplete="off">
           <div className="input-div">
             <TextField
@@ -87,7 +87,7 @@ class SubmitForm extends React.Component<SubmitFormProps, SubmitFormState> {
                 className="input"
                 labelId="type"
                 id="select"
-                value="article"
+                value={this.state.type}
                 onChange={this.handleType.bind(this)}
               >
                 <MenuItem value="blog">Blog</MenuItem>
