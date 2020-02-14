@@ -1,8 +1,24 @@
 body {
 }
 
-.container {
-  padding-top: 30px;
-  margin-left: 60px;
-  margin-right: 60px;
+.article-title {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.article-title a {
+  text-transform: uppercase;
+  font-family: "Tajawal", sans-serif;
+  font-weight: 800;
+  color: #446baa;
+  font-size: 18px;
+}
+
+.article-title a:hover {
+  text-decoration: underline;
+}
+
+.description {
+  font-size: 14px;
+  color: #f15690;
 }

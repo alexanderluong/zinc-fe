@@ -1,5 +1,6 @@
 import React from "react";
 import { fetchFeed } from "services/posts/api";
+import TagContainer from "components/tag";
 
 export interface FeedProps {}
 
@@ -29,22 +30,28 @@ class Feed extends React.Component<FeedProps, FeedState> {
       this.setState({ articles: articles });
     } else alert("Try again");
   }
-
   render() {
     return (
       <div>
-        <h2>Latest Articles.</h2>
+        <h2 className="section-heading">Latest Articles.</h2>
         {this.state.articles.map((article: any) => (
-          <div key={article.id}>
-            {new Intl.DateTimeFormat("en-US", {
-              month: "long",
-              day: "numeric",
-              year: "numeric"
-            }).format(article.date)}
-            <h3>
+          <div key={article.id} className="article">
+            <span className="description">
+              {article.company !== "" ? "By " + article.company + " on " : ""}
+              {new Intl.DateTimeFormat("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+              }).format(article.date)}
+            </span>
+            <div className="article-title">
               <a href={article.uri}>{article.title}</a>
-            </h3>
-            {article.company !== "" ? "By " + article.company + " on " : ""}
+            </div>
+            {article.categories.map((tag: string) => (
+              <div key={tag}>
+                <TagContainer tagName={tag} key={tag} />
+              </div>
+            ))}
           </div>
         ))}
       </div>

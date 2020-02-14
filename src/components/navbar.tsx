@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1
     },
+    bar: {
+      background: "#59606d",
+      boxShadow: "none"
+    },
     menuButton: {
       marginRight: theme.spacing(2)
     },
@@ -37,7 +41,7 @@ const NavBar = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.bar}>
         <Toolbar>
           <Typography
             component={Link}

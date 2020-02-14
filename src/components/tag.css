@@ -1,0 +1,20 @@
+.tag {
+  display: inline-block;
+  background-color: #70acb1;
+  color: white;
+  font-weight: 500;
+  float: left;
+
+  /* the padding here is funky */
+  padding-right: 7px;
+  padding-left: 7px;
+  padding-top: 4px;
+
+  margin-right: 5px;
+  font-size: 10px;
+  border-radius: 3px;
+}
+
+.tag:hover {
+  background-color: #f15690;
+}
