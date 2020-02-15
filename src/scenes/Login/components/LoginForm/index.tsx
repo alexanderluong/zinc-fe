@@ -13,6 +13,12 @@ export interface LoginFormState {
   email: string;
   password: string;
   isLoggedIn: boolean;
+  error: {
+    email_state: boolean;
+    password_state: boolean;
+    email_message: string;
+    password_message: string;
+  };
 }
 
 export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
@@ -22,7 +28,13 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
       isLoading: false,
       email: "",
       password: "",
-      isLoggedIn: false
+      isLoggedIn: false,
+      error: {
+        email_state: false,
+        password_state: false,
+        email_message: "",
+        password_message: ""
+      }
     };
   }
 
@@ -39,6 +51,29 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
   }
 
   async onLogin() {
+    let error = {
+      email_state: false,
+      password_state: false,
+      email_message: "",
+      password_message: ""
+    };
+
+    if (this.state.email === "") {
+      error.email_state = true;
+      error.email_message = "Please enter your email.";
+    }
+
+    if (this.state.password === "") {
+      error.password_state = true;
+      error.password_message = "Please enter your password.";
+    }
+
+    this.setState({ error: error });
+
+    if (error.email_state || error.password_state) {
+      return;
+    }
+
     this.setState({ isLoading: true });
 
     // TODO: Refactor below with redux/redux-thunk, try/catch and pass result as prop
@@ -47,7 +82,14 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
     // Handle
     if (res.ok) this.setState({ isLoggedIn: true });
-    else alert("Try again");
+    else {
+      let body = await res.json();
+      console.log(body);
+      error.password_state = true;
+      error.email_state = true;
+      error.password_message = "Wrong email or password. Please try again.";
+      this.setState({ error: error });
+    }
   }
 
   public render() {
@@ -57,6 +99,8 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
         <form autoComplete="off">
           <div className="input-div">
             <TextField
+              error={this.state.error.email_state}
+              helperText={this.state.error.email_message}
               autoComplete="email"
               className="input"
               label="Email"
@@ -66,6 +110,8 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
           </div>
           <div className="input-div">
             <TextField
+              error={this.state.error.password_state}
+              helperText={this.state.error.password_message}
               autoComplete="current-password"
               className="input"
               label="Password"
