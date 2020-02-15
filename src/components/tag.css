@@ -3,7 +3,6 @@
   background-color: #70acb1;
   color: white;
   font-weight: 500;
-  float: left;
 
   /* the padding here is funky */
   padding-right: 7px;
@@ -13,8 +12,11 @@
   margin-right: 5px;
   font-size: 10px;
   border-radius: 3px;
+
+  transition: background-color 0.3s;
 }
 
 .tag:hover {
   background-color: #f15690;
+  transition: background-color 0.8s;
 }

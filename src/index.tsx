@@ -19,6 +19,9 @@ export let theme = createMuiTheme({
     secondary: {
       main: "#f15690"
     }
+  },
+  typography: {
+    fontFamily: '"Tajawal", sans-serif'
   }
 });
 theme = responsiveFontSizes(theme);

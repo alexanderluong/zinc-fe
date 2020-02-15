@@ -1,9 +1,10 @@
-body {
+.article {
+  padding-bottom: 20px;
 }
 
 .article-title {
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .article-title a {
@@ -19,6 +20,10 @@ body {
 }
 
 .description {
-  font-size: 14px;
+  font-size: 12px;
   color: #f15690;
+}
+
+.filter-button:hover {
+  background: rgb(241, 86, 144, 1) !important;
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Router } from "../scenes/Router";
 import {
   AppBar,
   Toolbar,
@@ -27,7 +26,9 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       "&:hover": {
         color: "#FFF"
-      }
+      },
+      fontFamily: '"Playfair Display", sans-serif',
+      fontWeight: 700
     },
     link: {
       "&:hover": {
@@ -50,7 +51,7 @@ const NavBar = () => {
             className={classes.title}
             color="inherit"
           >
-            Hello Vancouver
+            <span className="main-site-title">Hello Vancouver</span>
           </Typography>
           <Button
             component={Link}

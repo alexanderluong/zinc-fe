@@ -9,7 +9,10 @@ export interface LoginFormProps {
 }
 
 export interface LoginFormState {
-  [key: string]: any; // TODO
+  isLoading: boolean;
+  email: string;
+  password: string;
+  isLoggedIn: boolean;
 }
 
 export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
@@ -50,7 +53,7 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
   public render() {
     return (
       <div id="form-submission">
-        <h3>Login.</h3>
+        <h3 className="section-heading">Login.</h3>
         <form autoComplete="off">
           <div className="input-div">
             <TextField
@@ -72,10 +75,11 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
             />
           </div>
           <div id="button">
-            <Button color="primary" onClick={this.onLogin.bind(this)}>
-              Submit
+            <Button color="secondary" onClick={this.onLogin.bind(this)}>
+              Log In
             </Button>
           </div>
+          <a href="/signup">No account yet? Sign up here.</a>
         </form>
       </div>
     );
