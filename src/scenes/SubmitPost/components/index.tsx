@@ -45,7 +45,6 @@ class SubmitForm extends React.Component<SubmitFormProps, SubmitFormState> {
 
   async onSubmit() {
     this.setState({ isLoading: true });
-    console.log(this.state);
     let res = await submitPost(
       this.state.title,
       this.state.uri,
@@ -55,8 +54,9 @@ class SubmitForm extends React.Component<SubmitFormProps, SubmitFormState> {
     let body = await res.json();
     // Handle
     if (res.ok) {
-      console.log(body);
       this.setState({ submitted: true });
+      alert("Post successfully submitted!");
+      this.setState({ isLoading: false, title: "", uri: "" });
     } else alert("Try again");
   }
 
