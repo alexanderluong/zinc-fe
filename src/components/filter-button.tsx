@@ -1,6 +1,5 @@
 import React from "react";
 import { Theme, Fab, createStyles, withStyles } from "@material-ui/core";
-import { theme } from "index";
 
 export interface FilterButtonProps {
   classes: any;
