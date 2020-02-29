@@ -48,6 +48,7 @@ body {
 .emphasis {
   color: #f15690;
   font-weight: bold;
+  position: relative;
 }
 
 .taj-font {
@@ -69,7 +70,7 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: -10;
+  z-index: 100;
 }
 
 @media only screen and (max-width: 593px) {

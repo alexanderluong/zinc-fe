@@ -13,7 +13,7 @@ class Banner extends React.Component<BannerProps, BannerState> {
           <div className="banner-title-text">
             <span
               className="play-font emphasis translu"
-              style={{ fontSize: "72px" }}
+              style={{ fontSize: "72px", top: "20px" }}
             >
               &ldquo;
             </span>
@@ -24,7 +24,7 @@ class Banner extends React.Component<BannerProps, BannerState> {
               <span className="line"> Hello, world!</span>
               <span
                 className="play-font emphasis translu"
-                style={{ fontSize: "72px" }}
+                style={{ fontSize: "72px", top: "20px" }}
               >
                 &rdquo;
               </span>

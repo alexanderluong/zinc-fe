@@ -1,13 +1,14 @@
 #banner {
   color: white;
   height: 100vh;
+  min-height: 400px;
+  position: relative;
   z-index: 100;
   background: url("vancity.jpg") #192630;
   background-color: #192630;
   background-size: cover;
   background-blend-mode: multiply;
   background-repeat: no-repeat;
-  overflow: auto;
 }
 
 /*
@@ -26,7 +27,7 @@
 .welcome-text {
   position: relative;
   width: 100%;
-  top: 40%;
+  top: 35%;
   text-align: center;
   margin: 0 auto;
   display: inline-block;
@@ -56,4 +57,25 @@
 
 span.line {
   display: inline-block;
+}
+
+@media only screen and (max-width: 700px) {
+  #banner {
+    min-height: 500px;
+  }
+
+  .banner-title-text {
+    font-size: 36px;
+    line-height: 0.4;
+  }
+
+  .banner-descr-text {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-height: 500px) {
+  .welcome-text {
+    top: 20%;
+  }
 }
