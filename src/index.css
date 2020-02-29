@@ -30,12 +30,6 @@ body {
   background-color: #f2fcfc;
 }
 
-.container {
-  padding-top: 30px;
-  margin-left: 10vw;
-  margin-right: 10vw;
-}
-
 ::-moz-selection {
   background: #f15690;
   color: white;
@@ -49,4 +43,37 @@ body {
   text-shadow: 1px 1px #f15690;
   text-decoration: underline;
   transition: text-shadow 1s;
+}
+
+.emphasis {
+  color: #f15690;
+  font-weight: bold;
+}
+
+.taj-font {
+  font-family: "Tajawal", sans-serif;
+}
+
+.play-font {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+}
+
+.blu {
+  color: #31debe;
+}
+
+#navbar-bg {
+  background-color: #192630;
+  height: 58px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -10;
+}
+
+@media only screen and (max-width: 593px) {
+  #navbar-bg {
+    height: 48px;
+  }
 }

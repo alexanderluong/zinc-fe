@@ -11,6 +11,7 @@ export const Router: React.FC<{}> = () => {
   return (
     <BrowserRouter>
       <React.Fragment>
+        <div id="navbar-bg"></div>
         <NavBar />
         <div>
           <Switch>

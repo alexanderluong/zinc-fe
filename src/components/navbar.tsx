@@ -16,8 +16,10 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1
     },
     bar: {
-      background: "#59606d",
-      boxShadow: "none"
+      background:
+        "linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(25,38,48,0))",
+      boxShadow: "none",
+      zIndex: 100
     },
     menuButton: {
       marginRight: theme.spacing(2)
@@ -42,7 +44,7 @@ const NavBar = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.bar}>
+      <AppBar className={classes.bar}>
         <Toolbar>
           <Typography
             component={Link}
@@ -51,7 +53,14 @@ const NavBar = () => {
             className={classes.title}
             color="inherit"
           >
-            <span className="main-site-title">Hello Vancouver</span>
+            <span className="emphasis taj-font" style={{ fontSize: "20px" }}>
+              &lt;&nbsp;
+            </span>
+            <span className="main-site-title">Vancity Tech</span>
+            <span className="emphasis taj-font" style={{ fontSize: "20px" }}>
+              {" "}
+              /&gt;
+            </span>
           </Typography>
           <Button
             component={Link}

@@ -27,3 +27,11 @@
 .filter-button:hover {
   background: rgb(241, 86, 144, 1) !important;
 }
+
+#feed-container {
+  margin-left: 10vw;
+  margin-right: 10vw;
+  display: block;
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
