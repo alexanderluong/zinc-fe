@@ -1,7 +1,8 @@
 import React from "react";
+import SignUpForm from "./components/"
 
 export const SignUpScene: React.FC<{}> = () => {
   return (
-    <div id="sign-up-form">Hello</div>
+    <SignUpForm />
   );
 };
