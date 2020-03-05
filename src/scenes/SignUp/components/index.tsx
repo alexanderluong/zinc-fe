@@ -10,6 +10,7 @@ export interface SignUpFormState {
   isLoading: boolean;
   email: string;
   password: string;
+  confirm_password: string;
   isLoggedIn: boolean;
   error: {
     email_state: boolean;
@@ -26,6 +27,7 @@ export class SignUpForm extends React.Component<SignUpFormProps, SignUpFormState
       isLoading: false,
       email: "",
       password: "",
+      confirm_password: "",
       isLoggedIn: false,
       error: {
         email_state: false,
@@ -45,6 +47,12 @@ export class SignUpForm extends React.Component<SignUpFormProps, SignUpFormState
   handlePassword(e: any) {
     this.setState({
       password: e.target.value
+    });
+  }
+
+  handleConfirmPassword(e: any) {
+    this.setState({
+      confirm_password: e.target.value
     });
   }
 
@@ -68,12 +76,24 @@ export class SignUpForm extends React.Component<SignUpFormProps, SignUpFormState
             <TextField
               error={this.state.error.password_state}
               helperText={this.state.error.password_message}
-              autoComplete="current-password"
+              autoComplete="new-password"
               className="input"
               label="Password"
               type="password"
               value={this.state.password}
               onChange={this.handlePassword.bind(this)}
+            />
+          </div>
+          <div className="input-div">
+            <TextField
+              error={this.state.error.password_state}
+              helperText={this.state.error.password_message}
+              autoComplete="new-password"
+              className="input"
+              label="Confirm Password"
+              type="password"
+              value={this.state.confirm_password}
+              onChange={this.handleConfirmPassword.bind(this)}
             />
           </div>
           <div id="button">
