@@ -11,6 +11,13 @@
   background-repeat: no-repeat;
 }
 
+/* IE 10 and 11 */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  #banner {
+    opacity: 0.8;
+  }
+}
+
 /*
 .banner:after {
   background: inherit;

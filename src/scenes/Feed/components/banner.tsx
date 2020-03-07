@@ -31,11 +31,12 @@ class Banner extends React.Component<BannerProps, BannerState> {
             </span>
           </div>
           <div className="banner-descr-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            placerat consectetur orci vitae tincidunt. Nulla et elit ac turpis
-            facilisis maximus. Aliquam eget metus a tortor elementum sodales.
-            Donec non turpis sed mi commodo pretium in nec elit. In hac
-            habitasse platea dictumst.
+            Did someone say Silicon Valley? Hold on - the fasted growing tech
+            hub is actually in Canada! Vancouver is a well-known hub for
+            innovation and attracts some of the world’s top tech talent. Here on
+            Vancity Tech, we want to inspire the Vancouver software development
+            community by fostering an ecosystem for the Vancouver tech scene.
+            Find posts written by top tech companies in the area!
           </div>
         </div>
       </div>
