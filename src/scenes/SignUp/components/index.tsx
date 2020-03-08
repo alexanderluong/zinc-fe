@@ -16,10 +16,16 @@ export interface SignUpFormState {
   confirm_password: string;
   isLoggedIn: boolean;
   error: {
+    first_name_state: boolean;
+    first_name_message: string;
+    last_name_state: boolean;
+    last_name_message: string;
     email_state: boolean;
     password_state: boolean;
     email_message: string;
     password_message: string;
+    confirm_password_state: boolean;
+    confirm_password_message: string;
   };
 }
 
@@ -38,10 +44,16 @@ export class SignUpForm extends React.Component<
       confirm_password: "",
       isLoggedIn: false,
       error: {
+        first_name_state: false,
+        first_name_message: "",
+        last_name_state: false,
+        last_name_message: "",
         email_state: false,
         password_state: false,
         email_message: "",
-        password_message: ""
+        password_message: "",
+        confirm_password_state: false,
+        confirm_password_message: ""
       }
     };
   }
@@ -79,22 +91,26 @@ export class SignUpForm extends React.Component<
   async onSignUp() {
     let error = {
       first_name_state: false,
+      first_name_message: "",
       last_name_state: false,
+      last_name_message: "",
       email_state: false,
       password_state: false,
-      confirm_password_state: false,
       email_message: "",
-      password_message: ""
+      password_message: "",
+      confirm_password_state: false,
+      confirm_password_message: ""
     };
 
     if (this.state.first_name === "") {
       error.first_name_state = true;
-      error.email_message = "Please enter a first name.";
+      error.first_name_message = "Please enter a first name.";
+      console.log("boop");
     }
 
     if (this.state.first_name === "") {
       error.last_name_state = true;
-      error.email_message = "Please enter a last name.";
+      error.last_name_message = "Please enter a last name.";
     }
 
     if (this.state.email === "") {
@@ -109,8 +125,15 @@ export class SignUpForm extends React.Component<
 
     if (this.state.password !== this.state.confirm_password) {
       error.confirm_password_state = true;
-      error.password_message = "Passwords need to match.";
+      error.confirm_password_message = "Passwords need to match.";
     }
+
+    if (this.state.confirm_password === "") {
+      error.confirm_password_state = true;
+      error.confirm_password_message = "Please enter a confirmation password.";
+    }
+
+    this.setState({ error: error });
 
     if (
       error.email_state ||
@@ -137,14 +160,15 @@ export class SignUpForm extends React.Component<
     // Handle
     // TODO: change this for signup
     if (res.ok) alert("You have created a user");
-    // else {
-    //   let body = await res.json();
-    //   console.log(body);
-    //   error.password_state = true;
-    //   error.email_state = true;
-    //   error.password_message = "Wrong email or password. Please try again.";
-    //   this.setState({ error: error });
-    // }
+    else {
+      let body = await res.json();
+      console.log(body);
+      console.log("ERROR");
+      // error.password_state = true;
+      // error.email_state = true;
+      // error.password_message = "Wrong email or password. Please try again.";
+      this.setState({ error: error });
+    }
   }
 
   public render() {
@@ -154,6 +178,8 @@ export class SignUpForm extends React.Component<
         <form autoComplete="off">
           <div className="input-div">
             <TextField
+              error={this.state.error.first_name_state}
+              helperText={this.state.error.first_name_message}
               autoComplete="given-name"
               className="input"
               label="First Name"
@@ -163,6 +189,8 @@ export class SignUpForm extends React.Component<
           </div>
           <div className="input-div">
             <TextField
+              error={this.state.error.last_name_state}
+              helperText={this.state.error.last_name_message}
               autoComplete="family-name"
               className="input"
               label="Last Name"
@@ -195,8 +223,8 @@ export class SignUpForm extends React.Component<
           </div>
           <div className="input-div">
             <TextField
-              error={this.state.error.password_state}
-              helperText={this.state.error.password_message}
+              error={this.state.error.confirm_password_state}
+              helperText={this.state.error.confirm_password_message}
               autoComplete="new-password"
               className="input"
               label="Confirm Password"
