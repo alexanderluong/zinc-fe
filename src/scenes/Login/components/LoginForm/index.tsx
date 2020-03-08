@@ -4,6 +4,9 @@ import { Button, TextField } from "@material-ui/core";
 import { auth } from "services/users/api";
 import "./style.css";
 
+import { SystemState } from "store/system/types";
+import { updateSession } from "store/system/actions";
+
 export interface LoginFormProps {
   [key: string]: any; // TODO
 }
@@ -77,12 +80,18 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
     this.setState({ isLoading: true });
 
     // TODO: Refactor below with redux/redux-thunk, try/catch and pass result as prop
-    let res = await auth(this.state.email, this.state.password);
+    let res: any = await auth(this.state.email, this.state.password);
     this.setState({ isLoading: false });
 
     // Handle
-    if (res.ok) this.setState({ isLoggedIn: true });
-    else {
+    if (res.ok) {
+      this.props.updateSession({
+        loggedIn: true,
+        session: "",
+        firstName: res.firstname,
+        lastName: res.lastname
+      });
+    } else {
       let body = await res.json();
       console.log(body);
       error.password_state = true;
