@@ -24,7 +24,8 @@ export async function createUser(firstName: string, lastName: string, email: str
       body: JSON.stringify({ firstName, lastName, email, password })
     };
 
-    console.log("test_post");
+    // console.log(req.body);
+    // console.log("create_user");
     return await fetch(`${BASE_API}/users`, req);
   } catch (err) {
     // Process?

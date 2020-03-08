@@ -163,10 +163,22 @@ export class SignUpForm extends React.Component<
     else {
       let body = await res.json();
       console.log(body);
-      console.log("ERROR");
-      // error.password_state = true;
-      // error.email_state = true;
-      // error.password_message = "Wrong email or password. Please try again.";
+      if (body.type === "OperationalError") {
+        error.email_state = true;
+        error.email_message = this.state.email + " is already registered.";
+      } else if (body.type === "SchemaValidationError") {
+        for (let req_error of body.meta.errors) {
+          console.log(error);
+          if (req_error.keyword === "format") {
+            error.email_state = true;
+            error.email_message = "Please enter a valid email address.";
+          } else if (req_error.keyword === "minLength") {
+            error.password_state = true;
+            error.password_message =
+              "Passwords must have at least six characters.";
+          }
+        }
+      }
       this.setState({ error: error });
     }
   }
