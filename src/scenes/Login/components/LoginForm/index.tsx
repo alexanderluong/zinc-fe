@@ -12,18 +12,6 @@ export interface LoginFormProps {
   loggedIn: boolean;
 }
 
-export interface LoginFormState {
-  isLoading: boolean;
-  email: string;
-  password: string;
-  isLoggedIn: boolean;
-  error: {
-    email_state: boolean;
-    password_state: boolean;
-    email_message: string;
-    password_message: string;
-  };
-}
 const LoginForm: React.FC<LoginFormProps> = ({ updateSession, loggedIn }) => {
   const [state, setState] = useState({
     isLoading: false,
@@ -37,22 +25,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ updateSession, loggedIn }) => {
       password_message: ""
     }
   });
-
-  function handleEmail(e: any) {
-    setState(
-      Object.assign({}, state, {
-        email: e.target.value
-      })
-    );
-  }
-
-  function handlePassword(e: any) {
-    setState(
-      Object.assign({}, state, {
-        password: e.target.value
-      })
-    );
-  }
 
   async function onLogin() {
     let error = {
@@ -80,17 +52,18 @@ const LoginForm: React.FC<LoginFormProps> = ({ updateSession, loggedIn }) => {
 
     setState(Object.assign({}, state, { isLoading: true }));
 
-    // TODO: Refactor below with redux/redux-thunk, try/catch and pass result as prop
     let res: any = await auth(state.email, state.password);
     setState(Object.assign({}, state, { isLoading: false }));
 
     // Handle
     if (res.ok) {
+      let body = await res.json();
+      console.log(body.data);
       updateSession({
         loggedIn: true,
-        session: "",
-        firstName: res.firstname,
-        lastName: res.lastname
+        session: body.data.token,
+        firstName: body.data.user.firstName,
+        lastName: body.data.user.lastName
       });
     } else {
       let body = await res.json();
