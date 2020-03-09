@@ -1,3 +1,7 @@
+.logged-in-class {
+  height: 30% !important;
+}
+
 #banner {
   color: white;
   height: 100vh;
@@ -68,6 +72,10 @@
   text-align: center;
   margin: 0 auto;
   display: inline-block;
+}
+
+.welcome-text.logged-in-class {
+  top: 120px;
 }
 
 .banner-title-text {

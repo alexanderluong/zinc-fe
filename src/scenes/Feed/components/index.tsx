@@ -33,7 +33,9 @@ class Feed extends React.Component<FeedProps, FeedState> {
   render() {
     return (
       <div>
-        <h2 className="section-heading">Latest Articles.</h2>
+        <h2 className="section-heading" id="feed-start">
+          Latest Articles.
+        </h2>
         {this.state.articles.map((article: any) => (
           <div key={article.id} className="article">
             <span className="description">

@@ -30,7 +30,16 @@ class Router extends React.Component<AppProps> {
           <NavBar loggedIn={this.props.session.loggedIn} />
           <div>
             <Switch>
-              <Route exact path="/" component={FeedScene} />
+              <Route
+                exact
+                path="/"
+                render={AppProps => (
+                  <FeedScene
+                    loggedIn={this.props.session.loggedIn}
+                    firstName={this.props.session.firstName}
+                  />
+                )}
+              />
               <Route
                 exact
                 path="/login"
