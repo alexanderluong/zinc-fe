@@ -1,56 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
 
 import { auth } from "services/users/api";
 import "./style.css";
 
+import { SystemState } from "store/system/types";
+import { Redirect } from "react-router-dom";
+
 export interface LoginFormProps {
-  [key: string]: any; // TODO
+  updateSession: (newSession: SystemState) => void;
+  loggedIn: boolean;
 }
 
-export interface LoginFormState {
-  isLoading: boolean;
-  email: string;
-  password: string;
-  isLoggedIn: boolean;
-  error: {
-    email_state: boolean;
-    password_state: boolean;
-    email_message: string;
-    password_message: string;
-  };
-}
+const LoginForm: React.FC<LoginFormProps> = ({ updateSession, loggedIn }) => {
+  const [state, setState] = useState({
+    isLoading: false,
+    email: "",
+    password: "",
+    isLoggedIn: false,
+    error: {
+      email_state: false,
+      password_state: false,
+      email_message: "",
+      password_message: ""
+    }
+  });
 
-export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      email: "",
-      password: "",
-      isLoggedIn: false,
-      error: {
-        email_state: false,
-        password_state: false,
-        email_message: "",
-        password_message: ""
-      }
-    };
-  }
-
-  handleEmail(e: any) {
-    this.setState({
-      email: e.target.value
-    });
-  }
-
-  handlePassword(e: any) {
-    this.setState({
-      password: e.target.value
-    });
-  }
-
-  async onLogin() {
+  async function onLogin() {
     let error = {
       email_state: false,
       password_state: false,
@@ -58,70 +34,90 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
       password_message: ""
     };
 
-    if (this.state.email === "") {
+    if (state.email === "") {
       error.email_state = true;
       error.email_message = "Please enter your email.";
     }
 
-    if (this.state.password === "") {
+    if (state.password === "") {
       error.password_state = true;
       error.password_message = "Please enter your password.";
     }
 
-    this.setState({ error: error });
+    setState(Object.assign({}, state, { error: error }));
 
     if (error.email_state || error.password_state) {
       return;
     }
 
-    this.setState({ isLoading: true });
+    setState(Object.assign({}, state, { isLoading: true }));
 
-    // TODO: Refactor below with redux/redux-thunk, try/catch and pass result as prop
-    let res = await auth(this.state.email, this.state.password);
-    this.setState({ isLoading: false });
+    let res: any = await auth(state.email, state.password);
+    setState(Object.assign({}, state, { isLoading: false }));
 
     // Handle
-    if (res.ok) this.setState({ isLoggedIn: true });
-    else {
+    if (res.ok) {
+      let body = await res.json();
+      console.log(body.data);
+      updateSession({
+        loggedIn: true,
+        session: body.data.token,
+        firstName: body.data.user.firstName,
+        lastName: body.data.user.lastName
+      });
+    } else {
       let body = await res.json();
       console.log(body);
       error.password_state = true;
       error.email_state = true;
       error.password_message = "Wrong email or password. Please try again.";
-      this.setState({ error: error });
+      setState(Object.assign({}, state, { error: error }));
     }
   }
 
-  public render() {
+  if (loggedIn) return <Redirect to="/" />;
+  else
     return (
       <div id="form-submission">
         <h3 className="section-heading">Login.</h3>
         <form autoComplete="off">
           <div className="input-div">
             <TextField
-              error={this.state.error.email_state}
-              helperText={this.state.error.email_message}
+              error={state.error.email_state}
+              helperText={state.error.email_message}
               autoComplete="email"
               className="input"
               label="Email"
-              value={this.state.email}
-              onChange={this.handleEmail.bind(this)}
+              value={state.email}
+              onChange={e =>
+                setState(
+                  Object.assign({}, state, {
+                    email: e.target.value
+                  })
+                )
+              }
             />
           </div>
           <div className="input-div">
             <TextField
-              error={this.state.error.password_state}
-              helperText={this.state.error.password_message}
+              error={state.error.password_state}
+              helperText={state.error.password_message}
               autoComplete="current-password"
               className="input"
               label="Password"
               type="password"
-              value={this.state.password}
-              onChange={this.handlePassword.bind(this)}
+              value={state.password}
+              onChange={e =>
+                setState(
+                  Object.assign({}, state, {
+                    password: e.target.value
+                  })
+                )
+              }
             />
           </div>
           <div id="button">
-            <Button color="secondary" onClick={this.onLogin.bind(this)}>
+            <Button color="secondary" onClick={onLogin}>
               Log In
             </Button>
           </div>
@@ -129,5 +125,6 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
         </form>
       </div>
     );
-  }
-}
+};
+
+export default LoginForm;

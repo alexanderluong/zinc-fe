@@ -4,10 +4,18 @@ import "./feed.css";
 import FilterButton from "components/filter-button";
 import Banner from "./components/banner";
 
-export const FeedScene: React.FC<{}> = () => {
+export interface FeedSceneProps {
+  loggedIn: boolean;
+  firstName: string;
+}
+
+export const FeedScene: React.FC<FeedSceneProps> = ({
+  loggedIn,
+  firstName
+}) => {
   return (
     <React.Fragment>
-      <Banner />
+      <Banner loggedIn={loggedIn} firstName={firstName} />
       <div id="feed-container">
         <Feed />
         <FilterButton />

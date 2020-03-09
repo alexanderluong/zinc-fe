@@ -9,6 +9,9 @@ import {
   createStyles,
   Theme
 } from "@material-ui/core";
+import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { SystemState } from "store/system/types";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,48 +43,101 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const NavBar = () => {
+export interface NavBarProps {
+  loggedIn: boolean;
+  updateSession: (newSession: SystemState) => void;
+}
+
+const NavBar: React.FC<NavBarProps> = ({ loggedIn, updateSession }) => {
   const classes = useStyles();
-  return (
-    <div className={classes.root}>
-      <AppBar className={classes.bar}>
-        <Toolbar>
-          <Typography
-            component={Link}
-            to="/"
-            variant="h6"
-            className={classes.title}
-            color="inherit"
-          >
-            <span className="emphasis taj-font" style={{ fontSize: "20px" }}>
-              &lt;&nbsp;
-            </span>
-            <span className="main-site-title">Vancity Tech</span>
-            <span className="emphasis taj-font" style={{ fontSize: "20px" }}>
-              {" "}
-              /&gt;
-            </span>
-          </Typography>
-          <Button
-            component={Link}
-            to="/login"
-            color="inherit"
-            className={classes.link}
-          >
-            Login / Sign Up
-          </Button>
-          <Button
-            component={Link}
-            to="/submit"
-            color="inherit"
-            className={classes.link}
-          >
-            Submit
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+
+  async function logOut() {
+    updateSession({
+      loggedIn: false,
+      session: "",
+      firstName: "",
+      lastName: ""
+    });
+  }
+
+  if (loggedIn) {
+    return (
+      <div className={classes.root}>
+        <AppBar className={classes.bar}>
+          <Toolbar>
+            <Typography
+              component={Link}
+              to="/"
+              variant="h6"
+              className={classes.title}
+              color="inherit"
+            >
+              <span className="emphasis taj-font" style={{ fontSize: "20px" }}>
+                &lt;&nbsp;
+              </span>
+              <span className="main-site-title">Vancity Tech</span>
+              <span className="emphasis taj-font" style={{ fontSize: "20px" }}>
+                {" "}
+                /&gt;
+              </span>
+            </Typography>
+            <Button
+              component={Link}
+              to="/subscriptions"
+              color="inherit"
+              className={classes.link}
+            >
+              <NotificationsActiveIcon />
+            </Button>
+            <Button
+              component={Link}
+              to="/submit"
+              color="inherit"
+              className={classes.link}
+            >
+              Submit
+            </Button>
+            <Button onClick={logOut} color="inherit" className={classes.link}>
+              Log Out
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  } else {
+    return (
+      <div className={classes.root}>
+        <AppBar className={classes.bar}>
+          <Toolbar>
+            <Typography
+              component={Link}
+              to="/"
+              variant="h6"
+              className={classes.title}
+              color="inherit"
+            >
+              <span className="emphasis taj-font" style={{ fontSize: "20px" }}>
+                &lt;&nbsp;
+              </span>
+              <span className="main-site-title">Vancity Tech</span>
+              <span className="emphasis taj-font" style={{ fontSize: "20px" }}>
+                {" "}
+                /&gt;
+              </span>
+            </Typography>
+            <Button
+              component={Link}
+              to="/login"
+              color="inherit"
+              className={classes.link}
+            >
+              Login / Sign Up
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
 };
 
 export default NavBar;

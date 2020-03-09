@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { submitPost } from "services/posts/api";
 import {
   TextField,
@@ -8,59 +8,38 @@ import {
   MenuItem
 } from "@material-ui/core";
 import "./submitform.css";
+import { Redirect } from "react-router-dom";
 
-export interface SubmitFormProps {}
-
-export interface SubmitFormState {
-  isLoading: boolean;
-  title: string;
-  uri: string;
-  type: string;
-  submitted: boolean;
+export interface SubmitFormProps {
+  loggedIn: boolean;
 }
 
-class SubmitForm extends React.Component<SubmitFormProps, SubmitFormState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      title: "",
-      uri: "",
-      type: "article",
-      submitted: false
-    };
-  }
+const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
+  const [state, setState] = useState({
+    isLoading: false,
+    title: "",
+    uri: "",
+    type: "article",
+    submitted: false
+  });
 
-  handleTitle(e: any) {
-    this.setState({ title: e.target.value });
-  }
-
-  handleURI(e: any) {
-    this.setState({ uri: e.target.value });
-  }
-
-  handleType(e: any) {
-    this.setState({ type: e.target.value });
-  }
-
-  async onSubmit() {
-    this.setState({ isLoading: true });
-    let res = await submitPost(
-      this.state.title,
-      this.state.uri,
-      this.state.type
-    );
-    this.setState({ isLoading: false });
+  async function onSubmit() {
+    setState(Object.assign({}, state, { isLoading: true }));
+    let res = await submitPost(state.title, state.uri, state.type);
+    setState(Object.assign({}, state, { isLoading: false }));
     let body = await res.json();
     // Handle
     if (res.ok) {
-      this.setState({ submitted: true });
+      setState(Object.assign({}, state, { submitted: true }));
       alert("Post successfully submitted!");
-      this.setState({ isLoading: false, title: "", uri: "" });
+      setState(
+        Object.assign({}, state, { isLoading: false, title: "", uri: "" })
+      );
     } else alert("Try again");
   }
 
-  render() {
+  if (loggedIn === false) return <Redirect to="/" />;
+  else {
     return (
       <div id="form-submission">
         <h3 className="section-heading">Submit a new post.</h3>
@@ -69,16 +48,20 @@ class SubmitForm extends React.Component<SubmitFormProps, SubmitFormState> {
             <TextField
               className="input"
               label="Title"
-              value={this.state.title}
-              onChange={this.handleTitle.bind(this)}
+              value={state.title}
+              onChange={e =>
+                setState(Object.assign({}, state, { title: e.target.value }))
+              }
             />
           </div>
           <div className="input-div">
             <TextField
               className="input"
               label="URI"
-              value={this.state.uri}
-              onChange={this.handleURI.bind(this)}
+              value={state.uri}
+              onChange={e =>
+                setState(Object.assign({}, state, { uri: e.target.value }))
+              }
             />
           </div>
           <div className="input-div">
@@ -87,8 +70,10 @@ class SubmitForm extends React.Component<SubmitFormProps, SubmitFormState> {
                 className="input"
                 labelId="type"
                 id="select"
-                value={this.state.type}
-                onChange={this.handleType.bind(this)}
+                value={state.type}
+                onChange={e =>
+                  setState(Object.assign({}, state, { type: e.target.value }))
+                }
               >
                 <MenuItem value="blog">Blog</MenuItem>
                 <MenuItem value="article">Article</MenuItem>
@@ -96,7 +81,7 @@ class SubmitForm extends React.Component<SubmitFormProps, SubmitFormState> {
             </InputLabel>
           </div>
           <div id="button">
-            <Button color="primary" onClick={this.onSubmit.bind(this)}>
+            <Button color="primary" onClick={onSubmit}>
               Submit
             </Button>
           </div>
@@ -104,6 +89,6 @@ class SubmitForm extends React.Component<SubmitFormProps, SubmitFormState> {
       </div>
     );
   }
-}
+};
 
 export default SubmitForm;
