@@ -27,7 +27,10 @@ class Router extends React.Component<AppProps> {
       <BrowserRouter>
         <React.Fragment>
           <div id="navbar-bg"></div>
-          <NavBar loggedIn={this.props.session.loggedIn} />
+          <NavBar
+            loggedIn={this.props.session.loggedIn}
+            updateSession={this.updateSession}
+          />
           <div>
             <Switch>
               <Route
@@ -50,8 +53,23 @@ class Router extends React.Component<AppProps> {
                   />
                 )}
               />
-              <Route exact path="/feed" component={FeedScene} />
-              <Route exact path="/submit" component={SubmitPostScene} />
+              <Route
+                exact
+                path="/feed"
+                render={AppProps => (
+                  <FeedScene
+                    loggedIn={this.props.session.loggedIn}
+                    firstName={this.props.session.firstName}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/submit"
+                render={AppProps => (
+                  <SubmitPostScene loggedIn={this.props.session.loggedIn} />
+                )}
+              />
               <Route exact path="/signup" component={SignUpScene} />
               <Route exact path="*" component={NotFoundScene} status={404} />
             </Switch>

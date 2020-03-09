@@ -10,6 +10,8 @@ import {
   Theme
 } from "@material-ui/core";
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { SystemState } from "store/system/types";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,10 +45,20 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface NavBarProps {
   loggedIn: boolean;
+  updateSession: (newSession: SystemState) => void;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ loggedIn }) => {
+const NavBar: React.FC<NavBarProps> = ({ loggedIn, updateSession }) => {
   const classes = useStyles();
+
+  async function logOut() {
+    updateSession({
+      loggedIn: false,
+      session: "",
+      firstName: "",
+      lastName: ""
+    });
+  }
 
   if (loggedIn) {
     return (
@@ -71,19 +83,22 @@ const NavBar: React.FC<NavBarProps> = ({ loggedIn }) => {
             </Typography>
             <Button
               component={Link}
+              to="/subscriptions"
+              color="inherit"
+              className={classes.link}
+            >
+              <NotificationsActiveIcon />
+            </Button>
+            <Button
+              component={Link}
               to="/submit"
               color="inherit"
               className={classes.link}
             >
               Submit
             </Button>
-            <Button
-              component={Link}
-              to="/subscriptions"
-              color="inherit"
-              className={classes.link}
-            >
-              <NotificationsActiveIcon />
+            <Button onClick={logOut} color="inherit" className={classes.link}>
+              Log Out
             </Button>
           </Toolbar>
         </AppBar>
