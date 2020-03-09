@@ -27,7 +27,7 @@ class Router extends React.Component<AppProps> {
       <BrowserRouter>
         <React.Fragment>
           <div id="navbar-bg"></div>
-          <NavBar />
+          <NavBar loggedIn={this.props.session.loggedIn} />
           <div>
             <Switch>
               <Route exact path="/" component={FeedScene} />
