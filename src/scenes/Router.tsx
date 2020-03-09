@@ -14,10 +14,14 @@ import { AppState } from "store";
 
 interface AppProps {
   updateSession: typeof updateSession;
-  system: SystemState;
+  session: SystemState;
 }
 
 class Router extends React.Component<AppProps> {
+  updateSession = (newSession: SystemState) => {
+    this.props.updateSession(newSession);
+  };
+
   render() {
     return (
       <BrowserRouter>
@@ -27,7 +31,16 @@ class Router extends React.Component<AppProps> {
           <div>
             <Switch>
               <Route exact path="/" component={FeedScene} />
-              <Route exact path="/login" component={LoginScene} />
+              <Route
+                exact
+                path="/login"
+                render={AppProps => (
+                  <LoginScene
+                    updateSession={this.updateSession}
+                    loggedIn={this.props.session.loggedIn}
+                  />
+                )}
+              />
               <Route exact path="/feed" component={FeedScene} />
               <Route exact path="/submit" component={SubmitPostScene} />
               <Route exact path="/signup" component={SignUpScene} />
@@ -41,7 +54,7 @@ class Router extends React.Component<AppProps> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  system: state.system
+  session: state.system
 });
 
 export default connect(mapStateToProps, { updateSession })(Router);
