@@ -116,7 +116,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ updateSession, loggedIn }) => {
             />
           </div>
           <div id="button">
-            <Button color="secondary" onClick={onLogin}>
+            <Button color="secondary" variant="contained" onClick={onLogin}>
               Log In
             </Button>
           </div>

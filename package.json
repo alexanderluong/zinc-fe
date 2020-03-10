@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.2",
     "@material-ui/icons": "^4.9.1",
+    "@types/react-router": "^5.1.4",
     "@types/redux-persist": "^4.3.1",
     "formik": "^1.5.8",
     "react": "^16.9.0",

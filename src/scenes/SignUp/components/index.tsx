@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TextField } from "@material-ui/core";
+import { Button, TextField, Container } from "@material-ui/core";
 import { createUser } from "services/users/api";
 import "./signupform.css";
 import { SystemState } from "store/system/types";
@@ -227,7 +227,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
             />
           </div>
           <div id="button">
-            <Button color="secondary" onClick={onSignUp}>
+            <Button color="secondary" variant="contained" onClick={onSignUp}>
               Sign Up
             </Button>
           </div>

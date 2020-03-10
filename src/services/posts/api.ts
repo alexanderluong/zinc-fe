@@ -1,13 +1,22 @@
 import { BASE_API } from "../../config";
 
-export async function fetchFeed(): Promise<Response> {
+export async function fetchFeed(
+  tags: string[] = [],
+  company: string = "",
+  search: string = ""
+): Promise<Response> {
   try {
     let req = {
       method: "get",
       headers: { "Content-Type": "application/json" }
     };
 
-    return await fetch(`${BASE_API}/feed`, req);
+    // TODO fix this for multiple tags
+    let req_url = `${BASE_API}/feed?`;
+    if (tags.length) req_url = req_url + "category=" + tags[0];
+    console.log(req_url);
+
+    return await fetch(req_url, req);
   } catch (err) {
     // Process?
     throw err;

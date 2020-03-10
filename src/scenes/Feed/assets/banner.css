@@ -109,6 +109,10 @@ span.line {
     min-height: 500px;
   }
 
+  #banner-container {
+    min-height: 500px;
+  }
+
   .banner-title-text {
     font-size: 36px;
     line-height: 0.4;
