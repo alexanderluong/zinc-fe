@@ -16,8 +16,8 @@ let styles = (theme: Theme) =>
     },
     container: {
       position: "fixed",
-      bottom: 30,
-      right: 30,
+      bottom: 70,
+      right: "10vw",
       zIndex: -10
     }
   });
