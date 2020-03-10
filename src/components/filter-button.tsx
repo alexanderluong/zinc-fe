@@ -18,7 +18,7 @@ let styles = (theme: Theme) =>
       position: "fixed",
       bottom: 70,
       right: "10vw",
-      zIndex: -10
+      zIndex: 1
     }
   });
 

@@ -1,29 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 // import { fetchSubscriptions } from "services/posts/api";
+import { SystemState } from "store/system/types";
+import { Redirect } from "react-router-dom";
 
-export interface SubscriptionsProps {}
-
-export interface SubscriptionsState {
-  isLoading: boolean;
-  articles: Array<any>;
+export interface SubscriptionsProps {
+  systemState: SystemState;
 }
 
-class Subscriptions extends React.Component<
-  SubscriptionsProps,
-  SubscriptionsState
-> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      articles: []
-    };
-  }
+const Subscriptions: React.FC<SubscriptionsProps> = ({ systemState }) => {
+  const [state, setState] = useState({
+    isLoading: false,
+    articles: []
+  });
 
-  async componentDidMount() {
-    this.setState({ isLoading: true });
+  async function componentDidMount() {
+    setState(Object.assign({}, state, { isLoading: true }));
     // let res = await fetchSubscriptions();
-    this.setState({ isLoading: false });
+    setState(Object.assign({}, state, { isLoading: false }));
 
     /* 
     if (res.ok) {
@@ -33,9 +26,15 @@ class Subscriptions extends React.Component<
       this.setState({ articles: articles });
     } else alert("Try again"); */
   }
-  render() {
-    return <div>Hello</div>;
-  }
-}
+
+  if (!systemState.loggedIn) return <Redirect to="/" />;
+  else
+    return (
+      <div id="not-found-container">
+        <h3 className="section-heading">Hello, {systemState.firstName}!</h3>
+        <p>Coming soon: manage your email subscriptions.</p>
+      </div>
+    );
+};
 
 export default Subscriptions;

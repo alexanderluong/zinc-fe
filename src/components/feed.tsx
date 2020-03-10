@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { fetchFeed } from "services/posts/api";
-import TagContainer from "components/tag";
-import FilterButton from "components/filter-button";
+import { fetchFeed } from "../services/posts/api";
+import TagContainer from "./tag";
+import FilterButton from "./filter-button";
 
-export interface FeedProps {}
+export interface FeedProps {
+  tags: string[];
+  company: string;
+  search: string;
+}
 
-const Feed: React.FC<FeedProps> = ({}) => {
+const Feed: React.FC<FeedProps> = ({ tags, company, search }) => {
   const [state, setState] = useState({
     isLoading: false,
-    articles: []
+    articles: [],
+    heading: tags.length
+      ? tags[0].charAt(0).toUpperCase() + tags[0].slice(1)
+      : "Latest Articles"
   });
 
   async function componentDidMount() {
     setState(Object.assign({}, state, { isLoading: true }));
-    let res = await fetchFeed();
+    let res = await fetchFeed(tags, company, search);
     setState(Object.assign({}, state, { isLoading: false }));
 
     if (res.ok) {
@@ -32,7 +39,7 @@ const Feed: React.FC<FeedProps> = ({}) => {
     <div id="feed-container">
       <FilterButton />
       <h2 className="section-heading" id="feed-start">
-        Latest Articles.
+        {state.heading}.
       </h2>
       {state.articles.map((article: any) => (
         <div key={article.id} className="article">

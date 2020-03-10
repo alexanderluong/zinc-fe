@@ -1,7 +1,6 @@
 import React from "react";
-import Feed from "./components";
+import Feed from "components/feed";
 import "./feed.css";
-import FilterButton from "components/filter-button";
 import Banner from "./components/banner";
 
 export interface FeedSceneProps {
@@ -16,10 +15,7 @@ export const FeedScene: React.FC<FeedSceneProps> = ({
   return (
     <React.Fragment>
       <Banner loggedIn={loggedIn} firstName={firstName} />
-      <div id="feed-container">
-        <Feed />
-        <FilterButton />
-      </div>
+      <Feed tags={[]} company={""} search={""} />
     </React.Fragment>
   );
 };
