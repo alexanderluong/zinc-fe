@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TextField } from "@material-ui/core";
+import { Button, TextField, Grid } from "@material-ui/core";
 
 import { auth } from "services/users/api";
 import "./style.css";
@@ -80,41 +80,47 @@ const LoginForm: React.FC<LoginFormProps> = ({ updateSession, loggedIn }) => {
       <div id="form-submission">
         <h3 className="section-heading">Login.</h3>
         <form autoComplete="off">
-          <div className="input-div">
-            <TextField
-              error={state.error.email_state}
-              helperText={state.error.email_message}
-              autoComplete="email"
-              className="input"
-              label="Email"
-              value={state.email}
-              onChange={e =>
-                setState(
-                  Object.assign({}, state, {
-                    email: e.target.value
-                  })
-                )
-              }
-            />
-          </div>
-          <div className="input-div">
-            <TextField
-              error={state.error.password_state}
-              helperText={state.error.password_message}
-              autoComplete="current-password"
-              className="input"
-              label="Password"
-              type="password"
-              value={state.password}
-              onChange={e =>
-                setState(
-                  Object.assign({}, state, {
-                    password: e.target.value
-                  })
-                )
-              }
-            />
-          </div>
+          <Grid container spacing={1}>
+            <Grid item xs={12} className="grid-item">
+              <div className="input-div">
+                <TextField
+                  error={state.error.email_state}
+                  helperText={state.error.email_message}
+                  autoComplete="email"
+                  className="input"
+                  label="Email"
+                  value={state.email}
+                  onChange={e =>
+                    setState(
+                      Object.assign({}, state, {
+                        email: e.target.value
+                      })
+                    )
+                  }
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} className="grid-item">
+              <div className="input-div">
+                <TextField
+                  error={state.error.password_state}
+                  helperText={state.error.password_message}
+                  autoComplete="current-password"
+                  className="input"
+                  label="Password"
+                  type="password"
+                  value={state.password}
+                  onChange={e =>
+                    setState(
+                      Object.assign({}, state, {
+                        password: e.target.value
+                      })
+                    )
+                  }
+                />
+              </div>
+            </Grid>
+          </Grid>
           <div id="button">
             <Button color="secondary" variant="contained" onClick={onLogin}>
               Log In
