@@ -70,7 +70,16 @@ class Router extends React.Component<AppProps> {
                   <SubmitPostScene loggedIn={this.props.session.loggedIn} />
                 )}
               />
-              <Route exact path="/signup" component={SignUpScene} />
+              <Route
+                exact
+                path="/signup"
+                render={AppProps => (
+                  <SignUpScene
+                    updateSession={this.updateSession}
+                    loggedIn={this.props.session.loggedIn}
+                  />
+                )}
+              />
               <Route exact path="*" component={NotFoundScene} status={404} />
             </Switch>
           </div>

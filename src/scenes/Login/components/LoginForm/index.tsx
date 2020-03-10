@@ -67,7 +67,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ updateSession, loggedIn }) => {
       });
     } else {
       let body = await res.json();
-      console.log(body);
       error.password_state = true;
       error.email_state = true;
       error.password_message = "Wrong email or password. Please try again.";
