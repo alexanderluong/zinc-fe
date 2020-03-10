@@ -1,3 +1,7 @@
 .grid-item {
   padding: 0 !important;
 }
+
+.input {
+  min-height: 40px;
+}
