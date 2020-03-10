@@ -5,11 +5,13 @@
   "dependencies": {
     "@material-ui/core": "^4.9.2",
     "@material-ui/icons": "^4.9.1",
+    "@types/react-helmet": "^5.0.15",
     "@types/react-router": "^5.1.4",
     "@types/redux-persist": "^4.3.1",
     "formik": "^1.5.8",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-helmet": "^5.2.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.3.0",
     "redux": "^4.0.5",
