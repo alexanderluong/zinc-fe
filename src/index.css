@@ -80,21 +80,27 @@ body {
 }
 
 /* width */
+/* 
 ::-webkit-scrollbar {
   width: 3px;
-}
+  float: right;
+  position: absolute;
+} */
 
 /* Track */
+/*
 ::-webkit-scrollbar-track {
   background: transparent;
-}
+} */
 
 /* Handle */
+/*
 ::-webkit-scrollbar-thumb {
   background: #f15690;
-}
+} */
 
 /* Handle on hover */
+/*
 ::-webkit-scrollbar-thumb:hover {
   background: #31debe;
-}
+} */

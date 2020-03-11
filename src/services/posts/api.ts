@@ -1,7 +1,7 @@
 import { BASE_API } from "../../config";
 
 export async function fetchFeed(
-  tags: string[] = [],
+  tag: string = "",
   company: string = "",
   search: string = ""
 ): Promise<Response> {
@@ -13,7 +13,7 @@ export async function fetchFeed(
 
     // TODO fix this for multiple tags
     let req_url = `${BASE_API}/feed?`;
-    if (tags.length) req_url = req_url + "category=" + tags[0];
+    if (tag !== "") req_url = req_url + "category=" + tag;
     console.log(req_url);
 
     return await fetch(req_url, req);

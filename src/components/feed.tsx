@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { fetchFeed } from "../services/posts/api";
 import TagContainer from "./tag";
-import FilterButton from "./filter-button";
+import "./feed.css";
+import FilterMenu from "./filter-menu";
 
 export interface FeedProps {
-  tags: string[];
-  company: string;
-  search: string;
+  tag: string | undefined;
+  company: string | undefined;
+  search: string | undefined;
 }
 
-const Feed: React.FC<FeedProps> = ({ tags, company, search }) => {
+const Feed: React.FC<FeedProps> = ({ tag, company, search }) => {
   const [state, setState] = useState({
     isLoading: false,
     articles: [],
-    heading: tags.length
-      ? tags[0].charAt(0).toUpperCase() + tags[0].slice(1)
-      : "Latest Articles"
+    heading: !tag
+      ? "Latest Articles"
+      : tag.charAt(0).toUpperCase() + tag.slice(1)
   });
 
   async function componentDidMount() {
     setState(Object.assign({}, state, { isLoading: true }));
-    let res = await fetchFeed(tags, company, search);
+    let res = await fetchFeed(tag, company, search);
     setState(Object.assign({}, state, { isLoading: false }));
 
     if (res.ok) {
@@ -36,30 +37,33 @@ const Feed: React.FC<FeedProps> = ({ tags, company, search }) => {
   }, []);
 
   return (
-    <div id="feed-container">
-      <FilterButton />
-      <h2 className="section-heading" id="feed-start">
-        {state.heading}.
-      </h2>
-      {state.articles.map((article: any) => (
-        <div key={article.id} className="article">
-          <span className="description">
-            {article.company !== "" ? "By " + article.company + " on " : ""}
-            {new Intl.DateTimeFormat("en-US", {
-              month: "long",
-              day: "numeric",
-              year: "numeric"
-            }).format(article.date)}
-          </span>
-          <div className="article-title">
-            <a href={article.uri}>{article.title}</a>
+    <React.Fragment>
+      <FilterMenu />
+
+      <div id="feed-container">
+        <h2 className="section-heading" id="feed-start">
+          {state.heading}.
+        </h2>
+        {state.articles.map((article: any) => (
+          <div key={article.id} className="article">
+            <span className="description">
+              {article.company !== "" ? "By " + article.company + " on " : ""}
+              {new Intl.DateTimeFormat("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+              }).format(article.date)}
+            </span>
+            <div className="article-title">
+              <a href={article.uri}>{article.title}</a>
+            </div>
+            {article.categories.map((article_tag: string) => (
+              <TagContainer tagName={article_tag} key={article_tag} />
+            ))}
           </div>
-          {article.categories.map((tag: string) => (
-            <TagContainer tagName={tag} key={tag} />
-          ))}
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </React.Fragment>
   );
 };
 

@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, BrowserRouter, Switch } from "react-router-dom";
+import React, { useLayoutEffect } from "react";
+import { Route, BrowserRouter, Switch, withRouter } from "react-router-dom";
 
 import { LoginScene } from "./Login";
 import { FeedScene } from "./Feed";
