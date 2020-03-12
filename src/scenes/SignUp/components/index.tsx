@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TextField, Container } from "@material-ui/core";
+import { Button, TextField, Container, Grid } from "@material-ui/core";
 import { createUser } from "services/users/api";
 import "./signupform.css";
 import { SystemState } from "store/system/types";
@@ -100,7 +100,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
     setState(Object.assign({}, state, { isLoading: false }));
 
     // Handle
-    // TODO: change this for signup
     if (res.ok) {
       let body = await res.json();
       console.log(body.data);
@@ -139,99 +138,121 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
       <div id="form-submission">
         <h3 className="section-heading">Signup.</h3>
         <form autoComplete="off">
-          <div className="input-div">
-            <TextField
-              error={state.error.first_name_state}
-              helperText={state.error.first_name_message}
-              autoComplete="given-name"
-              className="input"
-              label="First Name"
-              value={state.first_name}
-              onChange={e =>
-                setState(
-                  Object.assign({}, state, {
-                    first_name: e.target.value
-                  })
-                )
-              }
-            />
-          </div>
-          <div className="input-div">
-            <TextField
-              error={state.error.last_name_state}
-              helperText={state.error.last_name_message}
-              autoComplete="family-name"
-              className="input"
-              label="Last Name"
-              value={state.last_name}
-              onChange={e =>
-                setState(
-                  Object.assign({}, state, {
-                    last_name: e.target.value
-                  })
-                )
-              }
-            />
-          </div>
-          <div className="input-div">
-            <TextField
-              error={state.error.email_state}
-              helperText={state.error.email_message}
-              autoComplete="email"
-              className="input"
-              label="Email"
-              value={state.email}
-              onChange={e =>
-                setState(
-                  Object.assign({}, state, {
-                    email: e.target.value
-                  })
-                )
-              }
-            />
-          </div>
-          <div className="input-div">
-            <TextField
-              error={state.error.password_state}
-              helperText={state.error.password_message}
-              autoComplete="new-password"
-              className="input"
-              label="Password"
-              type="password"
-              value={state.password}
-              onChange={e =>
-                setState(
-                  Object.assign({}, state, {
-                    password: e.target.value
-                  })
-                )
-              }
-            />
-          </div>
-          <div className="input-div">
-            <TextField
-              error={state.error.confirm_password_state}
-              helperText={state.error.confirm_password_message}
-              autoComplete="new-password"
-              className="input"
-              label="Confirm Password"
-              type="password"
-              value={state.confirm_password}
-              onChange={e =>
-                setState(
-                  Object.assign({}, state, {
-                    confirm_password: e.target.value
-                  })
-                )
-              }
-            />
-          </div>
-          <div id="button">
-            <Button color="secondary" variant="contained" onClick={onSignUp}>
-              Sign Up
-            </Button>
-          </div>
-          <a href="/login">Already have an account? Click here to log in.</a>
+          <Grid container spacing={1}>
+            <Grid item sm={6} xs={12} className="grid-item">
+              <div className="input-div">
+                <TextField
+                  error={state.error.first_name_state}
+                  helperText={state.error.first_name_message}
+                  autoComplete="given-name"
+                  className="input"
+                  label="First Name"
+                  value={state.first_name}
+                  onChange={e =>
+                    setState(
+                      Object.assign({}, state, {
+                        first_name: e.target.value
+                      })
+                    )
+                  }
+                />
+              </div>
+            </Grid>
+            <Grid item sm={6} xs={12} className="grid-item">
+              <div className="input-div">
+                <TextField
+                  error={state.error.last_name_state}
+                  helperText={state.error.last_name_message}
+                  autoComplete="family-name"
+                  className="input"
+                  label="Last Name"
+                  value={state.last_name}
+                  onChange={e =>
+                    setState(
+                      Object.assign({}, state, {
+                        last_name: e.target.value
+                      })
+                    )
+                  }
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} className="grid-item">
+              <div className="input-div">
+                <TextField
+                  error={state.error.email_state}
+                  helperText={state.error.email_message}
+                  autoComplete="email"
+                  className="input"
+                  label="Email"
+                  value={state.email}
+                  onChange={e =>
+                    setState(
+                      Object.assign({}, state, {
+                        email: e.target.value
+                      })
+                    )
+                  }
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} className="grid-item">
+              <div className="input-div">
+                <TextField
+                  error={state.error.password_state}
+                  helperText={state.error.password_message}
+                  autoComplete="new-password"
+                  className="input"
+                  label="Password"
+                  type="password"
+                  value={state.password}
+                  onChange={e =>
+                    setState(
+                      Object.assign({}, state, {
+                        password: e.target.value
+                      })
+                    )
+                  }
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} className="grid-item">
+              <div className="input-div">
+                <TextField
+                  error={state.error.confirm_password_state}
+                  helperText={state.error.confirm_password_message}
+                  autoComplete="new-password"
+                  className="input"
+                  label="Confirm Password"
+                  type="password"
+                  value={state.confirm_password}
+                  onChange={e =>
+                    setState(
+                      Object.assign({}, state, {
+                        confirm_password: e.target.value
+                      })
+                    )
+                  }
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} className="grid-item">
+              <div id="button">
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={onSignUp}
+                >
+                  Sign Up
+                </Button>
+              </div>
+            </Grid>
+            <Grid item xs={12} className="grid-item">
+              <a href="/login">
+                Already have an account? Click here to log in.
+              </a>
+            </Grid>
+          </Grid>
         </form>
       </div>
     );

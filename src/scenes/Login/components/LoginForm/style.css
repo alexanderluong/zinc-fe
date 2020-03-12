@@ -57,6 +57,7 @@
 
 .input {
   margin-bottom: 5px;
+  min-height:40px;
 }
 
 
@@ -67,4 +68,8 @@
   margin-top: 55%;
   justify-content: center;
   align-items: center;
+}
+
+.grid-item {
+  padding: 0 !important;
 }
