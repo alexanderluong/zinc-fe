@@ -5,7 +5,8 @@ import {
   Button,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Grid
 } from "@material-ui/core";
 import "./submitform.css";
 import { Redirect } from "react-router-dom";
@@ -106,51 +107,65 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
       <div id="form-submission">
         <h3 className="section-heading">Submit a new post.</h3>
         <form autoComplete="off">
-          <div className="input-div">
-            <TextField
-              error={state.error.title_error}
-              helperText={state.error.title}
-              className="input"
-              label="Title"
-              value={state.title}
-              onChange={e =>
-                setState(Object.assign({}, state, { title: e.target.value }))
-              }
-            />
-          </div>
-          <div className="input-div">
-            <TextField
-              error={state.error.uri_error}
-              helperText={state.error.uri}
-              className="input"
-              label="Link"
-              value={state.uri}
-              onChange={e =>
-                setState(Object.assign({}, state, { uri: e.target.value }))
-              }
-            />
-          </div>
-          <div className="input-div">
-            <InputLabel>
-              <Select
-                className="input"
-                labelId="type"
-                id="select"
-                value={state.type}
-                onChange={e =>
-                  setState(Object.assign({}, state, { type: e.target.value }))
-                }
-              >
-                <MenuItem value="blog">Blog</MenuItem>
-                <MenuItem value="article">Article</MenuItem>
-              </Select>
-            </InputLabel>
-          </div>
-          <div id="button">
-            <Button color="primary" variant="contained" onClick={onSubmit}>
-              Submit
-            </Button>
-          </div>
+          <Grid container spacing={1}>
+            <Grid item xs={12} className="grid-item">
+              <div className="input-div">
+                <TextField
+                  error={state.error.title_error}
+                  helperText={state.error.title}
+                  className="input"
+                  label="Title"
+                  value={state.title}
+                  onChange={e =>
+                    setState(
+                      Object.assign({}, state, { title: e.target.value })
+                    )
+                  }
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} className="grid-item">
+              <div className="input-div">
+                <TextField
+                  error={state.error.uri_error}
+                  helperText={state.error.uri}
+                  className="input"
+                  label="Link"
+                  value={state.uri}
+                  onChange={e =>
+                    setState(Object.assign({}, state, { uri: e.target.value }))
+                  }
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} className="grid-item">
+              <div className="input-div">
+                <InputLabel>
+                  <Select
+                    className="input"
+                    labelId="type"
+                    id="select"
+                    value={state.type}
+                    onChange={e =>
+                      setState(
+                        Object.assign({}, state, { type: e.target.value })
+                      )
+                    }
+                  >
+                    <MenuItem value="blog">Blog</MenuItem>
+                    <MenuItem value="article">Article</MenuItem>
+                  </Select>
+                </InputLabel>
+              </div>
+            </Grid>
+            <Grid item xs={12} className="grid-item">
+              <div id="button">
+                <Button color="primary" variant="contained" onClick={onSubmit}>
+                  Submit
+                </Button>
+              </div>
+            </Grid>
+          </Grid>
         </form>
       </div>
     );
