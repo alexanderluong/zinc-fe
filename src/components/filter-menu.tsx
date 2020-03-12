@@ -9,6 +9,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Link } from "react-router-dom";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import "./feed.css";
 
 export interface FilterMenuProps {}
 
@@ -70,7 +71,9 @@ const useStyles = makeStyles(theme => ({
     boxShadow: "none",
     zIndex: 30000,
     position: "absolute",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: "#ffffff",
+    color: "#000000"
   },
   anchor: {
     position: "fixed",
@@ -83,13 +86,7 @@ const useStyles = makeStyles(theme => ({
 
 const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
   const classes = useStyles();
-  const categories: string[] = [
-    "design",
-    "risk",
-    "robotics",
-    "business",
-    "finance"
-  ];
+  const categories: string[] = ["risk", "robotics", "business", "finance"];
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuAnchorClass, setMenuAnchorClass] = useState("");
@@ -124,11 +121,8 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
   return (
     <React.Fragment>
       <div id="filter-menu-div" className={classes.menucontainer}>
-        <AppBar
-          color="transparent"
-          className={classes.bar + " " + menuAnchorClass}
-        >
-          <Toolbar>
+        <AppBar className={classes.bar + " " + menuAnchorClass}>
+          <Toolbar id="tool-bar-container">
             {categories.map((tag: string) => (
               <Button component={Link} to={"/tags/" + tag} color="inherit">
                 {tag.charAt(0).toUpperCase() + tag.slice(1)}

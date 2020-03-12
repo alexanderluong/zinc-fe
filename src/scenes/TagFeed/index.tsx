@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Feed from "components/feed";
 import { useParams } from "react-router";
+import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
-export interface TagFeedProps {}
+export interface TagFeedProps {
+  key: any;
+}
 
 const useStyles = makeStyles(theme => ({
   feedcontainer: {
@@ -14,12 +17,23 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const TagFeed: React.FC<TagFeedProps> = ({}) => {
-  var tag: string | undefined = undefined;
-  var company: string | undefined = undefined;
-  var search: string | undefined = undefined;
+  const [tag, setTag] = useState(undefined);
+  const [company, setCompany] = useState(undefined);
+  const [search, setSearch] = useState(undefined);
 
-  let param_tag: any = useParams();
-  tag = param_tag.tag;
+  const RefreshParams = (event: any) => {
+    var param_tag: any = useParams();
+    setTag(param_tag);
+  };
+
+  useEffect(() => {
+    console.log("componentDidMount");
+    document.addEventListener("popstate", RefreshParams);
+    return () => {
+      console.log("componentWillUnmount");
+      document.removeEventListener("popstate", RefreshParams);
+    };
+  }, []); // empty-array means don't watch for any updates
 
   const classes = useStyles();
 

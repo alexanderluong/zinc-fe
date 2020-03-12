@@ -29,8 +29,6 @@
 }
 
 #feed-container {
-  height: 100vh;
-  overflow: scroll;
   margin-left: 10vw;
   margin-right: 10vw;
   position: relative;
@@ -43,4 +41,9 @@
 /* Hide scrollbar for Chrome, Safari and Opera */
 #feed-container::-webkit-scrollbar {
   display: none;
+}
+
+#tool-bar-container {
+  max-width: 1000px;
+  margin: 0 auto;
 }
