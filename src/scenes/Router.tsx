@@ -82,9 +82,7 @@ const Router: React.FC<AppProps> = ({ updateSession, session }) => {
             <Route
               exact
               path="/tags/:tag"
-              render={AppProps => (
-                <TagFeed key={AppProps.match.params.pageid} />
-              )}
+              render={AppProps => <TagFeed key={AppProps.match.params.tag} />}
             />
             <Route exact path="*" component={NotFoundScene} status={404} />
           </Switch>

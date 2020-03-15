@@ -3,6 +3,9 @@ import { fetchFeed } from "../services/posts/api";
 import TagContainer from "./tag";
 import "./feed.css";
 import FilterMenu from "./filter-menu";
+import { withRouter } from "react-router";
+import { connect } from "react-redux";
+import { RouteComponentProps } from "react-router";
 
 export interface FeedProps {
   tag: string | undefined;
@@ -10,7 +13,13 @@ export interface FeedProps {
   search: string | undefined;
 }
 
-const Feed: React.FC<FeedProps> = ({ tag, company, search }) => {
+type PropsType = RouteComponentProps<FeedProps> & {
+  tag: string | undefined;
+  company: string | undefined;
+  search: string | undefined;
+};
+
+const Feed: React.FC<PropsType> = ({ tag, company, search }) => {
   const [state, setState] = useState({
     isLoading: false,
     articles: [],
@@ -20,6 +29,7 @@ const Feed: React.FC<FeedProps> = ({ tag, company, search }) => {
   });
 
   async function componentDidMount() {
+    console.log(tag);
     setState(Object.assign({}, state, { isLoading: true }));
     let res = await fetchFeed(tag, company, search);
     setState(Object.assign({}, state, { isLoading: false }));
@@ -67,4 +77,4 @@ const Feed: React.FC<FeedProps> = ({ tag, company, search }) => {
   );
 };
 
-export default Feed;
+export default withRouter(Feed);

@@ -16,31 +16,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const TagFeed: React.FC<TagFeedProps> = ({}) => {
-  const [tag, setTag] = useState(undefined);
+interface ParamTypes {
+  tag: string;
+}
+
+export const TagFeed: React.FC<TagFeedProps> = ({ key }) => {
+  console.log(useParams<ParamTypes>());
+  const { tag } = useParams<ParamTypes>();
+  const [feed_tag, setTag] = useState(tag);
   const [company, setCompany] = useState(undefined);
   const [search, setSearch] = useState(undefined);
-
-  const RefreshParams = (event: any) => {
-    var param_tag: any = useParams();
-    setTag(param_tag);
-  };
-
-  useEffect(() => {
-    console.log("componentDidMount");
-    document.addEventListener("popstate", RefreshParams);
-    return () => {
-      console.log("componentWillUnmount");
-      document.removeEventListener("popstate", RefreshParams);
-    };
-  }, []); // empty-array means don't watch for any updates
 
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <div className={classes.feedcontainer}>
-        <Feed tag={tag} company={company} search={search} />
+        <Feed tag={feed_tag} company={company} search={search} />
       </div>
     </React.Fragment>
   );
