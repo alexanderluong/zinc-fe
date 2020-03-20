@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
-export interface TagFeedProps {
+export interface CompanyFeedProps {
   key: any;
 }
 
@@ -17,14 +17,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface ParamTypes {
-  tag: string;
+  company: string;
 }
 
-export const TagFeed: React.FC<TagFeedProps> = ({}) => {
+export const CompanyFeed: React.FC<CompanyFeedProps> = ({}) => {
   console.log(useParams<ParamTypes>());
-  const { tag } = useParams<ParamTypes>();
-  const [feed_tag, setTag] = useState(tag);
-  const [company, setCompany] = useState(undefined);
+  const { company } = useParams<ParamTypes>();
+  const [feed_tag, setTag] = useState(undefined);
+  const [company_params, setCompany] = useState(company);
   const [search, setSearch] = useState(undefined);
 
   const classes = useStyles();
@@ -32,7 +32,7 @@ export const TagFeed: React.FC<TagFeedProps> = ({}) => {
   return (
     <React.Fragment>
       <div className={classes.feedcontainer}>
-        <Feed tag={feed_tag} company={company} search={search} />
+        <Feed tag={feed_tag} company={company_params} search={search} />
       </div>
     </React.Fragment>
   );

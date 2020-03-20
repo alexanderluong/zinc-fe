@@ -124,7 +124,12 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
         <AppBar className={classes.bar + " " + menuAnchorClass}>
           <Toolbar id="tool-bar-container">
             {categories.map((tag: string) => (
-              <Button component={Link} to={"/tags/" + tag} color="inherit">
+              <Button
+                component={Link}
+                to={"/tags/" + tag}
+                color="inherit"
+                key={tag}
+              >
                 {tag.charAt(0).toUpperCase() + tag.slice(1)}
               </Button>
             ))}

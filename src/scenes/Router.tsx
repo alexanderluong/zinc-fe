@@ -7,6 +7,7 @@ import { NotFoundScene } from "./NotFound";
 import { SubmitPostScene } from "./SubmitPost";
 import { SignUpScene } from "./SignUp";
 import { TagFeed } from "./TagFeed";
+import { CompanyFeed } from "./CompanyFeed";
 import NavBar from "../components/navbar";
 import { updateSession } from "store/system/actions";
 import { SystemState } from "store/system/types";
@@ -83,6 +84,13 @@ const Router: React.FC<AppProps> = ({ updateSession, session }) => {
               exact
               path="/tags/:tag"
               render={AppProps => <TagFeed key={AppProps.match.params.tag} />}
+            />
+            <Route
+              exact
+              path="/company/:company"
+              render={AppProps => (
+                <CompanyFeed key={AppProps.match.params.company} />
+              )}
             />
             <Route exact path="*" component={NotFoundScene} status={404} />
           </Switch>

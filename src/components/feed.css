@@ -24,6 +24,15 @@
   color: #f15690;
 }
 
+.description a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.description a:hover {
+  color: #446baa;
+}
+
 .filter-button:hover {
   background: rgb(241, 86, 144, 1) !important;
 }
