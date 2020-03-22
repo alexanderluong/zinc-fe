@@ -24,7 +24,7 @@ const Router: React.FC<AppProps> = ({ updateSession, session }) => {
     <BrowserRouter>
       <React.Fragment>
         <div id="navbar-bg"></div>
-        <NavBar loggedIn={session.loggedIn} updateSession={updateSession} />
+        <NavBar loggedIn={session.loggedIn} userRole={session.userRole} updateSession={updateSession} />
         <div>
           <Switch>
             <Route
