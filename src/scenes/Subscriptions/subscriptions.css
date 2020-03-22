@@ -1,0 +1,8 @@
+#subscriptions-container {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    position: relative;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    max-width: 700px;
+}

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getSubscriptions } from "services/categories/api";
+import { getUserInfo } from "services/users/api"
 import { SystemState } from "store/system/types";
 import { Redirect } from "react-router-dom";
+import "../subscriptions.css";
 
 export interface SubscriptionsProps {
   systemState: SystemState;
@@ -10,29 +12,33 @@ export interface SubscriptionsProps {
 const Subscriptions: React.FC<SubscriptionsProps> = ({ systemState }) => {
   const [state, setState] = useState({
     isLoading: false,
-    subscriptions: []
+    allSubscriptions: [],
+    userSubscriptions: []
   });
 
   async function componentDidMount() {
     setState(Object.assign({}, state, { isLoading: true }));
-    let res = await getSubscriptions();
+    let subscriptionsRes = await getSubscriptions();
     setState(Object.assign({}, state, { isLoading: false }));
-    if (res.ok) {
-      let body = await res.json()
+    let userInfoRes = await getUserInfo(systemState.session);
+    if (subscriptionsRes.ok) {
+      let body = await subscriptionsRes.json();
       let categories = body.data.resources;
-      setState(Object.assign({}, state, { subscriptions: categories }));
+      setState(Object.assign({}, state, { allSubscriptions: categories }));
       console.log(categories);
       // systemState.session gets the user key
     } else {
       alert("Subscriptions could not be fetched!")
     }
-    /* 
-    if (res.ok) {
-      let body = await res.json();
-      let articles = body.data.resources;
-      console.log(articles);
-      this.setState({ articles: articles });
-    } else alert("Try again"); */
+
+    if (userInfoRes.ok) {
+      let body = await userInfoRes.json();
+      let userSubscriptions = body.data.subscriptions;
+      setState(Object.assign({}, state, { userSubscriptions: userSubscriptions }))
+      console.log(userSubscriptions);
+    } else {
+      alert("User information could not be fetched!")
+    }
   }
 
   useEffect(() => {
@@ -44,9 +50,9 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({ systemState }) => {
     return (
       <div id="subscriptions-container">
         <h2 className="section-heading" id="subscriptions-start">
-          Subscriptions
+          Manage Subscriptions.
         </h2>
-        {state.subscriptions.map((subscription: any) => (
+        {state.allSubscriptions.map((subscription: any) => (
           <p key={subscription}>{subscription}</p>
         ))}
       </div>
