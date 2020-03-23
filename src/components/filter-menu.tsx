@@ -81,6 +81,10 @@ const useStyles = makeStyles(theme => ({
   },
   menucontainer: {
     position: "relative"
+  },
+  filterpopup: {
+    position: "fixed",
+    zIndex: 9999
   }
 }));
 
@@ -122,7 +126,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
     <React.Fragment>
       <div id="filter-menu-div" className={classes.menucontainer}>
         <AppBar className={classes.bar + " " + menuAnchorClass}>
-          <Toolbar id="tool-bar-container">
+          <div id="filter-menu-popup">
             {categories.map((tag: string) => (
               <Button
                 component={Link}
@@ -133,25 +137,10 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
                 {tag.charAt(0).toUpperCase() + tag.slice(1)}
               </Button>
             ))}
-            <Button
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              onClick={handleClick}
-              endIcon={<KeyboardArrowDownIcon />}
-            >
-              Companies
-            </Button>
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>Galvanize</MenuItem>
-              <MenuItem onClick={handleClose}>Hootsuite</MenuItem>
-              <MenuItem onClick={handleClose}>Visier</MenuItem>
-            </Menu>
+          </div>
+          <Toolbar id="tool-bar-container">
+            <Button onClick={handleClick}>Categories</Button>
+            <Button onClick={handleClick}>Companies</Button>
             <div className={classes.grow} />
             <div className={classes.search}>
               <div className={classes.searchIcon}>
