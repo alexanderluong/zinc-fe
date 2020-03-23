@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import "../subscriptions.css";
 
 export interface TransferListProps {
   allSubscriptions: string[],
@@ -18,11 +19,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       margin: 'auto',
-    },
-    paper: {
-      width: 200,
-      height: 230,
-      overflow: 'auto',
     },
     button: {
       margin: theme.spacing(0.5, 0),
@@ -63,8 +59,14 @@ const TransferList: React.FC<TransferListProps> = ({ allSubscriptions, userSubsc
 
   React.useEffect(() => {
     setUserSubs(userSubscriptions);
-    setAllSubs(allSubscriptions);
+    let filteredAllSubs: string[] = filterWords(allSubscriptions, userSubscriptions);
+    setAllSubs(filteredAllSubs);
   }, [userSubscriptions, allSubscriptions]);
+
+  // Return list A - list B
+  const filterWords = (listA: string[], listB: string[]) => {
+    return listA.filter(word => listB.indexOf(word) === -1);
+  }
 
   const handleAllRight = () => {
     setAllSubs(allSubs.concat(userSubs));
@@ -89,7 +91,7 @@ const TransferList: React.FC<TransferListProps> = ({ allSubscriptions, userSubsc
   };
 
   const customList = (allSubscriptions: string[]) => (
-    <Paper className={classes.paper}>
+    <Paper variant="outlined" className="transferlist-paper">
       <List dense component="div" role="list">
         {allSubscriptions.map((value: string) => {
           const labelId = `transfer-list-item-${value}-label`;
@@ -114,8 +116,8 @@ const TransferList: React.FC<TransferListProps> = ({ allSubscriptions, userSubsc
   );
 
   return (
-    <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
-      <Grid item>{customList(userSubs)}</Grid>
+    <Grid container spacing={3} justify="center" alignItems="center" className={classes.root}>
+      <Grid item><h2>Your Subscriptions</h2>{customList(userSubs)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -160,7 +162,7 @@ const TransferList: React.FC<TransferListProps> = ({ allSubscriptions, userSubsc
           </Button>
         </Grid>
       </Grid>
-      <Grid item>{customList(allSubs)}</Grid>
+      <Grid item><h2>All Subscriptions</h2>{customList(allSubs)}</Grid>
     </Grid>
   );
 }
