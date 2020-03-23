@@ -3,7 +3,9 @@ import { getSubscriptions } from "services/categories/api";
 import { getUserInfo } from "services/users/api"
 import { SystemState } from "store/system/types";
 import { Redirect } from "react-router-dom";
+import TransferList from "../components/transferlist";
 import "../subscriptions.css";
+import { Button } from "@material-ui/core";
 
 export interface SubscriptionsProps {
   systemState: SystemState;
@@ -19,25 +21,17 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({ systemState }) => {
   async function componentDidMount() {
     setState(Object.assign({}, state, { isLoading: true }));
     let subscriptionsRes = await getSubscriptions();
-    setState(Object.assign({}, state, { isLoading: false }));
     let userInfoRes = await getUserInfo(systemState.session);
-    if (subscriptionsRes.ok) {
-      let body = await subscriptionsRes.json();
-      let categories = body.data.resources;
-      setState(Object.assign({}, state, { allSubscriptions: categories }));
-      console.log(categories);
-      // systemState.session gets the user key
+    setState(Object.assign({}, state, { isLoading: false }));
+
+    if (subscriptionsRes.ok && userInfoRes.ok) {
+      let subscriptionBody = await subscriptionsRes.json();
+      let userInfoBody = await userInfoRes.json();
+      let userSubscriptions = userInfoBody.data.subscriptions;
+      let categories = subscriptionBody.data.resources;
+      setState(Object.assign({}, state, { allSubscriptions: categories, userSubscriptions: userSubscriptions }));
     } else {
       alert("Subscriptions could not be fetched!")
-    }
-
-    if (userInfoRes.ok) {
-      let body = await userInfoRes.json();
-      let userSubscriptions = body.data.subscriptions;
-      setState(Object.assign({}, state, { userSubscriptions: userSubscriptions }))
-      console.log(userSubscriptions);
-    } else {
-      alert("User information could not be fetched!")
     }
   }
 
@@ -52,9 +46,11 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({ systemState }) => {
         <h2 className="section-heading" id="subscriptions-start">
           Manage Subscriptions.
         </h2>
-        {state.allSubscriptions.map((subscription: any) => (
+        <TransferList allSubscriptions={state.allSubscriptions} userSubscriptions={state.userSubscriptions}/>
+        <Button variant="contained">Submit</Button>
+        {/* {state.allSubscriptions.map((subscription: any) => (
           <p key={subscription}>{subscription}</p>
-        ))}
+        ))} */}
       </div>
       // <div id="not-found-container">
       //   <h3 className="section-heading">Hello, {systemState.firstName}!</h3>
