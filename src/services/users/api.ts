@@ -55,7 +55,7 @@ export async function putUser(userToken: string, userSubscriptions: string[]): P
       body: JSON.stringify({subscriptions: userSubscriptions})
     };
 
-    return await fetch(`${BASE_API}/users/me`, req);
+    return await fetch(`${BASE_API}/users/`, req);
   } catch (err) {
     // Process?
     throw err;

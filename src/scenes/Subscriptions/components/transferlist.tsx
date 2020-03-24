@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { putUser }  from "services/users/api";
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,6 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import "../subscriptions.css";
 
 export interface TransferListProps {
+  userToken: string,
   allSubscriptions: string[],
   userSubscriptions: string[];
 }
@@ -34,7 +36,7 @@ function intersection(a: string[], b: string[]) {
   return a.filter(value => b.indexOf(value) !== -1);
 }
 
-const TransferList: React.FC<TransferListProps> = ({ allSubscriptions, userSubscriptions }) => {
+const TransferList: React.FC<TransferListProps> = ({ userToken, allSubscriptions, userSubscriptions }) => {
   const classes = useStyles();
   const [userSubs, setUserSubs] = React.useState<string[]>(userSubscriptions);
   const [allSubs, setAllSubs] = React.useState<string[]>(allSubscriptions);
@@ -66,6 +68,18 @@ const TransferList: React.FC<TransferListProps> = ({ allSubscriptions, userSubsc
   // Return list A - list B
   const filterWords = (listA: string[], listB: string[]) => {
     return listA.filter(word => listB.indexOf(word) === -1);
+  }
+
+  async function onSubscribe() {
+    // console.log(userSubs);
+    // console.log(userToken);
+    let res = await putUser(
+      userToken, userSubs
+    );
+
+    if (res.ok) {
+      console.log("yay");
+    }
   }
 
   const handleAllRight = () => {
@@ -163,6 +177,7 @@ const TransferList: React.FC<TransferListProps> = ({ allSubscriptions, userSubsc
         </Grid>
       </Grid>
       <Grid item><h2>All Subscriptions</h2>{customList(allSubs)}</Grid>
+      <Button variant="contained" onClick={onSubscribe}>Submit</Button>
     </Grid>
   );
 }

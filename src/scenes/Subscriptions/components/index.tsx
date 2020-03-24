@@ -46,16 +46,8 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({ systemState }) => {
         <h2 className="section-heading" id="subscriptions-start">
           Manage Subscriptions.
         </h2>
-        <TransferList allSubscriptions={state.allSubscriptions} userSubscriptions={state.userSubscriptions}/>
-        <Button variant="contained">Submit</Button>
-        {/* {state.allSubscriptions.map((subscription: any) => (
-          <p key={subscription}>{subscription}</p>
-        ))} */}
+        <TransferList userToken={systemState.session} allSubscriptions={state.allSubscriptions} userSubscriptions={state.userSubscriptions}/>
       </div>
-      // <div id="not-found-container">
-      //   <h3 className="section-heading">Hello, {systemState.firstName}!</h3>
-      //   <p>Coming soon: manage your email subscriptions.</p>
-      // </div>
     );
 };
 
