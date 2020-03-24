@@ -4,7 +4,8 @@ const initialState: SystemState = {
   loggedIn: false,
   session: "",
   firstName: "",
-  lastName: ""
+  lastName: "",
+  userRole: ""
 };
 
 export function systemReducer(

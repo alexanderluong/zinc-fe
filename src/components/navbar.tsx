@@ -45,10 +45,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface NavBarProps {
   loggedIn: boolean;
+  userRole: string;
   updateSession: (newSession: SystemState) => void;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ loggedIn, updateSession }) => {
+const NavBar: React.FC<NavBarProps> = ({ loggedIn, userRole, updateSession }) => {
   const classes = useStyles();
 
   async function logOut() {
@@ -56,11 +57,17 @@ const NavBar: React.FC<NavBarProps> = ({ loggedIn, updateSession }) => {
       loggedIn: false,
       session: "",
       firstName: "",
-      lastName: ""
+      lastName: "",
+      userRole: ""
     });
   }
 
-  if (loggedIn) {
+  async function toDashboard() {
+    const url = 'http://admin.argv.io/';
+    window.open(url, '_blank');
+  }
+
+  if (loggedIn && userRole === "gen") {
     return (
       <div className={classes.root}>
         <AppBar className={classes.bar}>
@@ -96,6 +103,53 @@ const NavBar: React.FC<NavBarProps> = ({ loggedIn, updateSession }) => {
               className={classes.link}
             >
               Submit
+            </Button>
+            <Button onClick={logOut} color="inherit" className={classes.link}>
+              Log Out
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  } else if (loggedIn && (userRole === "superuser" || userRole === "admin")) {
+    return (
+      <div className={classes.root}>
+        <AppBar className={classes.bar}>
+          <Toolbar>
+            <Typography
+              component={Link}
+              to="/"
+              variant="h6"
+              className={classes.title}
+              color="inherit"
+            >
+              <span className="emphasis taj-font" style={{ fontSize: "20px" }}>
+                &lt;&nbsp;
+              </span>
+              <span className="main-site-title">Vancity Tech</span>
+              <span className="emphasis taj-font" style={{ fontSize: "20px" }}>
+                {" "}
+                /&gt;
+              </span>
+            </Typography>
+            <Button
+              component={Link}
+              to="/subscriptions"
+              color="inherit"
+              className={classes.link}
+            >
+              <NotificationsActiveIcon />
+            </Button>
+            <Button
+              component={Link}
+              to="/submit"
+              color="inherit"
+              className={classes.link}
+            >
+              Submit
+            </Button>
+            <Button onClick={toDashboard} color="inherit" className={classes.link}>
+              Dashboard
             </Button>
             <Button onClick={logOut} color="inherit" className={classes.link}>
               Log Out

@@ -107,7 +107,8 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
         loggedIn: true,
         session: body.data.token,
         firstName: body.data.user.firstName,
-        lastName: body.data.user.lastName
+        lastName: body.data.user.lastName,
+        userRole: body.data.user.role
       });
     } else {
       let body = await res.json();

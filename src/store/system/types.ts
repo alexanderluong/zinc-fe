@@ -3,6 +3,7 @@ export interface SystemState {
   session: string;
   firstName: string;
   lastName: string;
+  userRole: string;
 }
 
 export const UPDATE_SESSION = "UPDATE_SESSION";
