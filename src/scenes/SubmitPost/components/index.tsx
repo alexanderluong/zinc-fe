@@ -85,9 +85,8 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
       let body = await res.json();
       console.log(body);
       if (body.type === "OperationalError") {
-        error.title_error = true;
-        error.title =
-          'Article "' + state.title + '" has already been submitted.';
+        error.uri_error = true;
+        error.uri = "This link has already been submitted.";
       } else if (body.type === "SchemaValidationError") {
         for (let req_error of body.meta.errors) {
           if (req_error.keyword === "format") {
