@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
       background:
         "linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(25,38,48,0))",
       boxShadow: "none",
-      zIndex: 300
+      zIndex: 30000
     },
     menuButton: {
       marginRight: theme.spacing(2)

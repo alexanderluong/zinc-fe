@@ -7,12 +7,14 @@ import { NotFoundScene } from "./NotFound";
 import { SubmitPostScene } from "./SubmitPost";
 import { SignUpScene } from "./SignUp";
 import { TagFeed } from "./TagFeed";
+import { CompanyFeed } from "./CompanyFeed";
 import NavBar from "../components/navbar";
 import { updateSession } from "store/system/actions";
 import { SystemState } from "store/system/types";
 import { connect } from "react-redux";
 import { AppState } from "store";
 import { SubscriptionsScene } from "./Subscriptions";
+import { PlainFeed } from "./PlainFeed";
 
 interface AppProps {
   updateSession: typeof updateSession;
@@ -51,9 +53,9 @@ const Router: React.FC<AppProps> = ({ updateSession, session }) => {
               exact
               path="/feed"
               render={AppProps => (
-                <FeedScene
-                  loggedIn={session.loggedIn}
-                  firstName={session.firstName}
+                <PlainFeed
+                  key={AppProps.location.search}
+                  params={AppProps.location.search}
                 />
               )}
             />
@@ -79,7 +81,18 @@ const Router: React.FC<AppProps> = ({ updateSession, session }) => {
               path="/subscriptions"
               render={AppProps => <SubscriptionsScene systemState={session} />}
             />
-            <Route exact path="/tags/:tag" render={AppProps => <TagFeed />} />
+            <Route
+              exact
+              path="/tags/:tag"
+              render={AppProps => <TagFeed key={AppProps.match.params.tag} />}
+            />
+            <Route
+              exact
+              path="/company/:company"
+              render={AppProps => (
+                <CompanyFeed key={AppProps.match.params.company} />
+              )}
+            />
             <Route exact path="*" component={NotFoundScene} status={404} />
           </Switch>
         </div>

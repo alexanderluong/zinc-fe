@@ -3,25 +3,50 @@ import { fetchFeed } from "../services/posts/api";
 import TagContainer from "./tag";
 import "./feed.css";
 import FilterMenu from "./filter-menu";
+import { withRouter } from "react-router";
+import { RouteComponentProps } from "react-router";
 
 export interface FeedProps {
-  tag: string | undefined;
-  company: string | undefined;
+  tags: string[] | undefined;
+  companies: string[] | undefined;
   search: string | undefined;
 }
 
-const Feed: React.FC<FeedProps> = ({ tag, company, search }) => {
+const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
+  console.log(companies);
+  console.log(tags);
+  let heading = "";
+  if (tags && tags.length > 0) {
+    let capitalizedCategories = [];
+    for (let i = 0; i < tags.length; i++) {
+      capitalizedCategories.push(
+        tags[i].charAt(0).toUpperCase() + tags[i].slice(1)
+      );
+    }
+    heading += capitalizedCategories.join(", ");
+  }
+  if (tags && tags.length > 0 && companies && companies.length > 0)
+    heading += " & ";
+  if (companies && companies.length > 0) {
+    let capitalizedCompanies = [];
+    for (let i = 0; i < companies.length; i++) {
+      capitalizedCompanies.push(
+        companies[i].charAt(0).toUpperCase() + companies[i].slice(1)
+      );
+    }
+    heading += capitalizedCompanies.join(", ");
+  }
+
   const [state, setState] = useState({
     isLoading: false,
     articles: [],
-    heading: !tag
-      ? "Latest Articles"
-      : tag.charAt(0).toUpperCase() + tag.slice(1)
+    heading: heading === "" ? "Latest Articles" : heading
   });
 
   async function componentDidMount() {
+    console.log(tags);
     setState(Object.assign({}, state, { isLoading: true }));
-    let res = await fetchFeed(tag, company, search);
+    let res = await fetchFeed(tags, companies, search);
     setState(Object.assign({}, state, { isLoading: false }));
 
     if (res.ok) {
@@ -38,7 +63,7 @@ const Feed: React.FC<FeedProps> = ({ tag, company, search }) => {
 
   return (
     <React.Fragment>
-      <FilterMenu />
+      <FilterMenu key={state.heading} />
 
       <div id="feed-container">
         <h2 className="section-heading" id="feed-start">
@@ -47,7 +72,11 @@ const Feed: React.FC<FeedProps> = ({ tag, company, search }) => {
         {state.articles.map((article: any) => (
           <div key={article.id} className="article">
             <span className="description">
-              {article.company !== "" ? "By " + article.company + " on " : ""}
+              {article.company !== "" && "By "}
+              {article.company !== "" && (
+                <a href={"/company/" + article.company}>{article.company}</a>
+              )}
+              {article.company !== "" && " on "}
               {new Intl.DateTimeFormat("en-US", {
                 month: "long",
                 day: "numeric",
@@ -55,13 +84,16 @@ const Feed: React.FC<FeedProps> = ({ tag, company, search }) => {
               }).format(article.date)}
             </span>
             <div className="article-title">
-              <a href={article.uri}>{article.title}</a>
+              <a target="_blank" rel="noopener noreferrer" href={article.uri}>
+                {article.title}
+              </a>
             </div>
             {article.categories.map((article_tag: string) => (
               <TagContainer tagName={article_tag} key={article_tag} />
             ))}
           </div>
         ))}
+        {state.articles.length === 0 ? "No articles found" : ""}
       </div>
     </React.Fragment>
   );
