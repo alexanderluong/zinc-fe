@@ -19,6 +19,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Checkbox from "@material-ui/core/Checkbox";
 import "./feed.css";
+import { getSubscriptions } from "services/categories/api";
+import { getCompanies } from "services/companies/api";
 
 export interface FilterMenuProps {}
 
@@ -146,7 +148,8 @@ const useStyles = makeStyles(theme => ({
     WebkitUserSelect: "none",
     msUserSelect: "none",
     display: "inline-block",
-    fontSize: "14px"
+    fontSize: "14px",
+    marginTop: 7
   },
   formControl: {
     margin: theme.spacing(3)
@@ -155,17 +158,46 @@ const useStyles = makeStyles(theme => ({
 
 const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
   const classes = useStyles();
-  const categories: string[] = ["risk", "robotics", "business", "finance"];
-  const companies: string[] = [
-    "galvanize",
-    "tableau",
-    "hootsuite",
-    "terramera"
-  ];
-
-  const SHOW_CATEGORY_POPUP = classes.show_category;
 
   const emptyArray: string[] = [];
+
+  const [state, setState] = useState({
+    categories: emptyArray,
+    companies: emptyArray
+  });
+
+  async function componentDidMount() {
+    let categoriesRes = await getSubscriptions();
+    let companiesRes = await getCompanies();
+
+    if (categoriesRes.ok && companiesRes.ok) {
+      let categoriesBody = await categoriesRes.json();
+      let companiesBody = await companiesRes.json();
+      let categories: string[] = categoriesBody.data.resources;
+      let companies: string[] = companiesBody.data.resources;
+
+      for (let i = 0; i < categories.length; i++) {
+        categories[i] = categories[i].toLowerCase();
+      }
+      categories = categories.filter((v, i) => categories.indexOf(v) === i);
+
+      for (let i = 0; i < companies.length; i++) {
+        companies[i] = "test".toLowerCase();
+      }
+      companies.filter((v, i) => companies.indexOf(v) === i);
+
+      setState({
+        categories: categories,
+        companies: companies
+      });
+    }
+  }
+
+  useEffect(() => {
+    componentDidMount();
+  }, []);
+
+  const SHOW_CATEGORY_POPUP = classes.show_category;
 
   const [showCategoryPopup, setShowCategoryPopup] = useState("");
   const [selectedCategories, setSelectedCategories] = useState(emptyArray);
@@ -262,7 +294,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
             <i>Filter by</i>
             <div className={classes.categories}>
               <h3>Categories</h3>
-              {categories.sort().map((tag: string) => (
+              {state.categories.sort().map((tag: string) => (
                 <span
                   key={tag}
                   className={`"noselect" ${classes.button} ${
@@ -278,7 +310,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
             </div>
             <div className={classes.companies}>
               <h3>Companies</h3>
-              {companies.sort().map((tag: string) => (
+              {state.companies.sort().map((tag: string) => (
                 <span
                   key={tag}
                   className={`"noselect" ${classes.button} ${
