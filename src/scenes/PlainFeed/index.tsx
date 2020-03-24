@@ -32,8 +32,14 @@ export const PlainFeed: React.FC<PlainFeedProps> = ({ params }) => {
   console.log(params);
   let parsedParams = queryString.parse(params);
 
-  let categories = parsedParams.categories.split(",");
-  let companies = parsedParams.companies.split(",");
+  let categories =
+    parsedParams.categories !== undefined
+      ? parsedParams.categories.split(",")
+      : [];
+  let companies =
+    parsedParams.companies !== undefined
+      ? parsedParams.companies.split(",")
+      : [];
 
   console.log(categories);
   console.log(companies);

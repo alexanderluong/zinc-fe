@@ -303,6 +303,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
                   ? "&companies=" + selectedCompanies.join(",")
                   : "")
               }
+              onClick={handleCategoryClick}
               className={classes.goButton}
               endIcon={<ArrowForwardIcon />}
               size="large"
