@@ -1,31 +1,32 @@
-import React, { useState } from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { putUser }  from "services/users/api";
-import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
+import React, { useState } from "react";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { putUser } from "services/users/api";
+import Grid from "@material-ui/core/Grid";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Checkbox from "@material-ui/core/Checkbox";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import Alert from "@material-ui/lab/Alert";
 import "../subscriptions.css";
 
 export interface TransferListProps {
-  userToken: string,
-  allSubscriptions: string[],
+  userToken: string;
+  allSubscriptions: string[];
   userSubscriptions: string[];
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      margin: 'auto',
+      margin: "auto"
     },
     button: {
-      margin: theme.spacing(0.5, 0),
-    },
-  }),
+      margin: theme.spacing(0.5, 0)
+    }
+  })
 );
 
 function not(a: string[], b: string[]) {
@@ -36,12 +37,15 @@ function intersection(a: string[], b: string[]) {
   return a.filter(value => b.indexOf(value) !== -1);
 }
 
-const TransferList: React.FC<TransferListProps> = ({ userToken, allSubscriptions, userSubscriptions }) => {
+const TransferList: React.FC<TransferListProps> = ({
+  userToken,
+  allSubscriptions,
+  userSubscriptions
+}) => {
   const classes = useStyles();
   const [userSubs, setUserSubs] = React.useState<string[]>(userSubscriptions);
   const [allSubs, setAllSubs] = React.useState<string[]>(allSubscriptions);
   const [checked, setChecked] = React.useState<string[]>([]);
-
 
   const leftChecked = intersection(checked, userSubs);
   const rightChecked = intersection(checked, allSubs);
@@ -61,21 +65,20 @@ const TransferList: React.FC<TransferListProps> = ({ userToken, allSubscriptions
 
   React.useEffect(() => {
     setUserSubs(userSubscriptions);
-    let filteredAllSubs: string[] = filterWords(allSubscriptions, userSubscriptions);
+    let filteredAllSubs: string[] = filterWords(
+      allSubscriptions,
+      userSubscriptions
+    );
     setAllSubs(filteredAllSubs);
   }, [userSubscriptions, allSubscriptions]);
 
   // Return list A - list B
   const filterWords = (listA: string[], listB: string[]) => {
     return listA.filter(word => listB.indexOf(word) === -1);
-  }
+  };
 
   async function onSubscribe() {
-    // console.log(userSubs);
-    // console.log(userToken);
-    let res = await putUser(
-      userToken, userSubs
-    );
+    let res = await putUser(userToken, userSubs);
 
     if (res.ok) {
       console.log("yay");
@@ -111,13 +114,18 @@ const TransferList: React.FC<TransferListProps> = ({ userToken, allSubscriptions
           const labelId = `transfer-list-item-${value}-label`;
 
           return (
-            <ListItem key={value} role="listitem" button onClick={handleToggle(value)}>
+            <ListItem
+              key={value}
+              role="listitem"
+              button
+              onClick={handleToggle(value)}
+            >
               <ListItemIcon>
                 <Checkbox
                   checked={checked.indexOf(value) !== -1}
                   tabIndex={-1}
                   disableRipple
-                  inputProps={{ 'aria-labelledby': labelId }}
+                  inputProps={{ "aria-labelledby": labelId }}
                 />
               </ListItemIcon>
               <ListItemText id={labelId} primary={value} />
@@ -130,8 +138,17 @@ const TransferList: React.FC<TransferListProps> = ({ userToken, allSubscriptions
   );
 
   return (
-    <Grid container spacing={3} justify="center" alignItems="center" className={classes.root}>
-      <Grid item><h2>Your Subscriptions</h2>{customList(userSubs)}</Grid>
+    <Grid container spacing={3} justify="center" alignItems="center">
+      <Grid item xs={12} justify="center" className="alert">
+        <Alert severity="success">
+          Your subscriptions have been updated succesfully.
+        </Alert>
+      </Grid>
+      <br/>
+      <Grid item>
+        <h2>Your Subscriptions</h2>
+        {customList(userSubs)}
+      </Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -176,10 +193,15 @@ const TransferList: React.FC<TransferListProps> = ({ userToken, allSubscriptions
           </Button>
         </Grid>
       </Grid>
-      <Grid item><h2>All Subscriptions</h2>{customList(allSubs)}</Grid>
-      <Button variant="contained" onClick={onSubscribe}>Submit</Button>
+      <Grid item>
+        <h2>All Subscriptions</h2>
+        {customList(allSubs)}
+      </Grid>
+      <Button variant="contained" onClick={onSubscribe}>
+        Update
+      </Button>
     </Grid>
   );
-}
+};
 
 export default TransferList;
