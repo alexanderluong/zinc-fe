@@ -43,9 +43,14 @@ const TransferList: React.FC<TransferListProps> = ({
   userSubscriptions
 }) => {
   const classes = useStyles();
-  const [userSubs, setUserSubs] = React.useState<string[]>(userSubscriptions.sort());
-  const [allSubs, setAllSubs] = React.useState<string[]>(allSubscriptions.sort());
+  const [userSubs, setUserSubs] = React.useState<string[]>(
+    userSubscriptions.sort()
+  );
+  const [allSubs, setAllSubs] = React.useState<string[]>(
+    allSubscriptions.sort()
+  );
   const [checked, setChecked] = React.useState<string[]>([]);
+  const [alert, setAlert] = React.useState<any>();
 
   const leftChecked = intersection(checked, userSubs);
   const rightChecked = intersection(checked, allSubs);
@@ -81,8 +86,32 @@ const TransferList: React.FC<TransferListProps> = ({
     let res = await putUser(userToken, userSubs);
 
     if (res.ok) {
-      console.log("yay");
+      setAlert(successAlert());
+    } else {
+      setAlert(failureAlert());
     }
+  }
+
+  function hideElement(id: string) {
+    let element = document.getElementById(id);
+    if (element != null)
+      element.style.display = "none";
+  }
+
+  function successAlert() {
+    return (
+      <Alert severity="success" id="success-alert" onClose={() => hideElement("success-alert")}>
+        Your subscriptions have been updated succesfully.
+      </Alert>
+    );
+  }
+
+  function failureAlert() {
+    return (
+      <Alert severity="error" id="error-alert" onClose={() => hideElement("error-alert")}>
+        An error has occurred. Your subscriptions were not updated succesfully. 
+      </Alert>
+    );
   }
 
   const handleAllRight = () => {
@@ -141,12 +170,14 @@ const TransferList: React.FC<TransferListProps> = ({
 
   return (
     <Grid container spacing={3} justify="center" alignItems="center">
-      <Grid item xs={12} className="alert">
-        <Alert severity="success">
-          Your subscriptions have been updated succesfully.
-        </Alert>
+      <Grid item md={3} sm={2} xs='auto' className="alert">
       </Grid>
-      <br/>
+      <Grid item md={6} sm={8} xs={12} className="alert">
+        {alert}
+      </Grid>
+      <Grid item md={3} sm={2} xs='auto' className="alert">
+      </Grid>
+      <br />
       <Grid item>
         <h2>Your Subscriptions</h2>
         {customList(userSubs)}
