@@ -323,7 +323,16 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
             >
               Filter
             </Button>
-            <div className={classes.grow} />
+          </Toolbar>
+        </AppBar>
+      </div>
+    </React.Fragment>
+  );
+};
+
+/* 
+
+<div className={classes.grow} />
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -337,11 +346,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
                 inputProps={{ "aria-label": "search" }}
               />
             </div>
-          </Toolbar>
-        </AppBar>
-      </div>
-    </React.Fragment>
-  );
-};
+
+            */
 
 export default FilterMenu;
