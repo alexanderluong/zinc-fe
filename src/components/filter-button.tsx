@@ -15,9 +15,6 @@ let styles = (theme: Theme) =>
       background: "rgb(89,96,109,0.3)"
     },
     container: {
-      position: "fixed",
-      bottom: 70,
-      right: "10vw",
       zIndex: 1
     }
   });

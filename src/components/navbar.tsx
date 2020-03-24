@@ -10,7 +10,6 @@ import {
   Theme
 } from "@material-ui/core";
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { SystemState } from "store/system/types";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -22,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
       background:
         "linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(25,38,48,0))",
       boxShadow: "none",
-      zIndex: 300
+      zIndex: 30000
     },
     menuButton: {
       marginRight: theme.spacing(2)
@@ -38,7 +37,8 @@ const useStyles = makeStyles((theme: Theme) =>
     link: {
       "&:hover": {
         color: "#FFF"
-      }
+      },
+      marginLeft: 10
     }
   })
 );
@@ -131,7 +131,16 @@ const NavBar: React.FC<NavBarProps> = ({ loggedIn, updateSession }) => {
               color="inherit"
               className={classes.link}
             >
-              Login / Sign Up
+              Sign in
+            </Button>
+            <Button
+              component={Link}
+              to="/login"
+              color="secondary"
+              variant="contained"
+              className={classes.link}
+            >
+              Sign up
             </Button>
           </Toolbar>
         </AppBar>
