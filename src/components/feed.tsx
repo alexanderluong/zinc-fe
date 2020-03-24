@@ -7,26 +7,34 @@ import { withRouter } from "react-router";
 import { RouteComponentProps } from "react-router";
 
 export interface FeedProps {
-  tag: string | undefined;
-  company: string | undefined;
+  tags: string[] | undefined;
+  companies: string[] | undefined;
   search: string | undefined;
 }
 
-type PropsType = RouteComponentProps<FeedProps> & {
-  tag: string | undefined;
-  company: string | undefined;
-  search: string | undefined;
-};
-
-const Feed: React.FC<PropsType> = ({ tag, company, search }) => {
-  console.log(company);
+const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
+  console.log(companies);
+  console.log(tags);
   let heading = "";
-  if (tag) {
-    heading += "Category: " + tag.charAt(0).toUpperCase() + tag.slice(1);
+  if (tags && tags.length > 0) {
+    let capitalizedCategories = [];
+    for (let i = 0; i < tags.length; i++) {
+      capitalizedCategories.push(
+        tags[i].charAt(0).toUpperCase() + tags[i].slice(1)
+      );
+    }
+    heading += capitalizedCategories.join(", ");
   }
-  if (tag && company) heading += " & ";
-  if (company) {
-    heading += "Company: " + company.charAt(0).toUpperCase() + company.slice(1);
+  if (tags && tags.length > 0 && companies && companies.length > 0)
+    heading += " & ";
+  if (companies && companies.length > 0) {
+    let capitalizedCompanies = [];
+    for (let i = 0; i < companies.length; i++) {
+      capitalizedCompanies.push(
+        companies[i].charAt(0).toUpperCase() + companies[i].slice(1)
+      );
+    }
+    heading += capitalizedCompanies.join(", ");
   }
 
   const [state, setState] = useState({
@@ -36,9 +44,9 @@ const Feed: React.FC<PropsType> = ({ tag, company, search }) => {
   });
 
   async function componentDidMount() {
-    console.log(tag);
+    console.log(tags);
     setState(Object.assign({}, state, { isLoading: true }));
-    let res = await fetchFeed(tag, company, search);
+    let res = await fetchFeed(tags, companies, search);
     setState(Object.assign({}, state, { isLoading: false }));
 
     if (res.ok) {
@@ -85,9 +93,10 @@ const Feed: React.FC<PropsType> = ({ tag, company, search }) => {
             ))}
           </div>
         ))}
+        {state.articles.length === 0 ? "No articles found" : ""}
       </div>
     </React.Fragment>
   );
 };
 
-export default withRouter(Feed);
+export default Feed;

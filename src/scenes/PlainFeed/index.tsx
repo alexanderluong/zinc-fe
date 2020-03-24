@@ -4,7 +4,8 @@ import { useParams } from "react-router";
 import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
-export interface TagFeedProps {
+export interface PlainFeedProps {
+  params: any;
   key: any;
 }
 
@@ -20,19 +21,27 @@ interface ParamTypes {
   tag: string;
 }
 
-export const TagFeed: React.FC<TagFeedProps> = ({}) => {
-  console.log(useParams<ParamTypes>());
-  const { tag } = useParams<ParamTypes>();
-  const [feed_tag, setTag] = useState([tag]);
-  const [company, setCompany] = useState([]);
+export const PlainFeed: React.FC<PlainFeedProps> = ({ params }) => {
+  const [feed_tag, setTag] = useState(undefined);
+  const [company, setCompany] = useState(undefined);
   const [search, setSearch] = useState(undefined);
 
   const classes = useStyles();
 
+  const queryString = require("query-string");
+  console.log(params);
+  let parsedParams = queryString.parse(params);
+
+  let categories = parsedParams.categories.split(",");
+  let companies = parsedParams.companies.split(",");
+
+  console.log(categories);
+  console.log(companies);
+
   return (
     <React.Fragment>
       <div className={classes.feedcontainer}>
-        <Feed tags={feed_tag} companies={company} search={search} />
+        <Feed tags={categories} companies={companies} search={search} />
       </div>
     </React.Fragment>
   );

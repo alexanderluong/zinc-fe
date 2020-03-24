@@ -14,6 +14,7 @@ import { SystemState } from "store/system/types";
 import { connect } from "react-redux";
 import { AppState } from "store";
 import { SubscriptionsScene } from "./Subscriptions";
+import { PlainFeed } from "./PlainFeed";
 
 interface AppProps {
   updateSession: typeof updateSession;
@@ -52,9 +53,9 @@ const Router: React.FC<AppProps> = ({ updateSession, session }) => {
               exact
               path="/feed"
               render={AppProps => (
-                <FeedScene
-                  loggedIn={session.loggedIn}
-                  firstName={session.firstName}
+                <PlainFeed
+                  key={AppProps.location.search}
+                  params={AppProps.location.search}
                 />
               )}
             />

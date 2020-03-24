@@ -23,8 +23,8 @@ interface ParamTypes {
 export const CompanyFeed: React.FC<CompanyFeedProps> = ({}) => {
   console.log(useParams<ParamTypes>());
   const { company } = useParams<ParamTypes>();
-  const [feed_tag, setTag] = useState(undefined);
-  const [company_params, setCompany] = useState(company);
+  const [feed_tag, setTag] = useState([]);
+  const [company_params, setCompany] = useState([company]);
   const [search, setSearch] = useState(undefined);
 
   const classes = useStyles();
@@ -32,7 +32,7 @@ export const CompanyFeed: React.FC<CompanyFeedProps> = ({}) => {
   return (
     <React.Fragment>
       <div className={classes.feedcontainer}>
-        <Feed tag={feed_tag} company={company_params} search={search} />
+        <Feed tags={feed_tag} companies={company_params} search={search} />
       </div>
     </React.Fragment>
   );

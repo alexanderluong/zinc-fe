@@ -14,7 +14,7 @@ export const FeedScene: React.FC<FeedSceneProps> = ({
   return (
     <React.Fragment>
       <Banner loggedIn={loggedIn} firstName={firstName} />
-      <Feed tag={""} company={""} search={""} />
+      <Feed tags={[]} companies={[]} search={""} />
     </React.Fragment>
   );
 };
