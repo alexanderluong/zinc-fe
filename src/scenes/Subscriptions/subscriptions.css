@@ -1,0 +1,17 @@
+#subscriptions-container {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+.transferlist-paper {
+    width: 250px;
+    height: 500px;
+    margin: auto;
+    overflow: auto;
+}
+
+.alert {
+    max-width: 500px;
+}

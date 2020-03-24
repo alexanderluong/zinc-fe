@@ -32,3 +32,32 @@ export async function createUser(firstName: string, lastName: string, email: str
     throw err;
   }
 }
+
+export async function getUserInfo(userToken: string): Promise<Response> {
+  try {
+    let req = {
+      method: "get",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + userToken }
+    };
+
+    return await fetch(`${BASE_API}/users/me`, req);
+  } catch (err) {
+    // Process?
+    throw err;
+  }
+}
+
+export async function putUser(userToken: string, userSubscriptions: string[]): Promise<Response> {
+  try {
+    let req = {
+      method: "put",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + userToken },
+      body: JSON.stringify({subscriptions: userSubscriptions})
+    };
+
+    return await fetch(`${BASE_API}/users/`, req);
+  } catch (err) {
+    // Process?
+    throw err;
+  }
+}

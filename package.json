@@ -40,12 +40,14 @@
     ]
   },
   "devDependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.46",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.27",
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
     "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^4.3.5",
+    "react-redux": "^7.2.0",
     "typescript": "^3.7.5"
   }
 }
