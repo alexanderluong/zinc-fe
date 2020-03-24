@@ -43,8 +43,8 @@ const TransferList: React.FC<TransferListProps> = ({
   userSubscriptions
 }) => {
   const classes = useStyles();
-  const [userSubs, setUserSubs] = React.useState<string[]>(userSubscriptions);
-  const [allSubs, setAllSubs] = React.useState<string[]>(allSubscriptions);
+  const [userSubs, setUserSubs] = React.useState<string[]>(userSubscriptions.sort());
+  const [allSubs, setAllSubs] = React.useState<string[]>(allSubscriptions.sort());
   const [checked, setChecked] = React.useState<string[]>([]);
 
   const leftChecked = intersection(checked, userSubs);
@@ -86,25 +86,27 @@ const TransferList: React.FC<TransferListProps> = ({
   }
 
   const handleAllRight = () => {
-    setAllSubs(allSubs.concat(userSubs));
+    setAllSubs(allSubs.concat(userSubs).sort());
     setUserSubs([]);
+    setChecked([]);
   };
 
   const handleCheckedRight = () => {
-    setAllSubs(allSubs.concat(leftChecked));
+    setAllSubs(allSubs.concat(leftChecked).sort());
     setUserSubs(not(userSubs, leftChecked));
     setChecked(not(checked, leftChecked));
   };
 
   const handleCheckedLeft = () => {
-    setUserSubs(userSubs.concat(rightChecked));
+    setUserSubs(userSubs.concat(rightChecked).sort());
     setAllSubs(not(allSubs, rightChecked));
     setChecked(not(checked, rightChecked));
   };
 
   const handleAllLeft = () => {
-    setUserSubs(userSubs.concat(allSubs));
+    setUserSubs(userSubs.concat(allSubs).sort());
     setAllSubs([]);
+    setChecked([]);
   };
 
   const customList = (allSubscriptions: string[]) => (
@@ -139,7 +141,7 @@ const TransferList: React.FC<TransferListProps> = ({
 
   return (
     <Grid container spacing={3} justify="center" alignItems="center">
-      <Grid item xs={12} justify="center" className="alert">
+      <Grid item xs={12} className="alert">
         <Alert severity="success">
           Your subscriptions have been updated succesfully.
         </Alert>
