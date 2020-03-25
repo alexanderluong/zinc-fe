@@ -19,6 +19,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Checkbox from "@material-ui/core/Checkbox";
 import "./feed.css";
+import { getSubscriptions } from "services/categories/api";
+import { getCompanies } from "services/companies/api";
 
 export interface FilterMenuProps {}
 
@@ -126,12 +128,16 @@ const useStyles = makeStyles(theme => ({
     bottom: 10,
     position: "absolute"
   },
+  goButtonContainer: {
+    display: "inline-block",
+    marginTop: 30
+  },
   closeButton: { right: 0, position: "absolute" },
   selectedCategory: {
     border: "2px solid #f15690 !important"
   },
   selectedCompany: {
-    border: "2px solid #70acb1 !important"
+    border: "2px solid #f15690 !important"
   },
   button: {
     variant: "contained",
@@ -146,7 +152,8 @@ const useStyles = makeStyles(theme => ({
     WebkitUserSelect: "none",
     msUserSelect: "none",
     display: "inline-block",
-    fontSize: "14px"
+    fontSize: "14px",
+    marginTop: 7
   },
   formControl: {
     margin: theme.spacing(3)
@@ -155,17 +162,53 @@ const useStyles = makeStyles(theme => ({
 
 const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
   const classes = useStyles();
-  const categories: string[] = ["risk", "robotics", "business", "finance"];
-  const companies: string[] = [
-    "galvanize",
-    "tableau",
-    "hootsuite",
-    "terramera"
-  ];
 
-  const SHOW_CATEGORY_POPUP = classes.show_category;
+  type companyObj = {
+    company: string;
+  };
 
   const emptyArray: string[] = [];
+
+  const [state, setState] = useState({
+    categories: emptyArray,
+    companies: emptyArray
+  });
+
+  async function componentDidMount() {
+    let categoriesRes = await getSubscriptions();
+    let companiesRes = await getCompanies();
+
+    if (categoriesRes.ok && companiesRes.ok) {
+      let categoriesBody = await categoriesRes.json();
+      let companiesBody = await companiesRes.json();
+      let categories: string[] = categoriesBody.data.resources;
+
+      let companyObjects: companyObj[] = companiesBody.data.resources;
+
+      for (let i = 0; i < categories.length; i++) {
+        categories[i] = categories[i].toLowerCase();
+      }
+      categories = categories.filter((v, i) => categories.indexOf(v) === i);
+
+      let companies: string[] = [];
+      for (let i = 0; i < companyObjects.length; i++) {
+        let companyName: string = companyObjects[i].company;
+        companies[i] = companyName;
+      }
+      companies = companies.filter(val => val); // Filter out empty string
+
+      setState({
+        categories: categories,
+        companies: companies
+      });
+    }
+  }
+
+  useEffect(() => {
+    componentDidMount();
+  }, []);
+
+  const SHOW_CATEGORY_POPUP = classes.show_category;
 
   const [showCategoryPopup, setShowCategoryPopup] = useState("");
   const [selectedCategories, setSelectedCategories] = useState(emptyArray);
@@ -262,7 +305,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
             <i>Filter by</i>
             <div className={classes.categories}>
               <h3>Categories</h3>
-              {categories.sort().map((tag: string) => (
+              {state.categories.sort().map((tag: string) => (
                 <span
                   key={tag}
                   className={`"noselect" ${classes.button} ${
@@ -272,13 +315,13 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
                   }`}
                   onClick={() => handleCategoryFilterClick(tag)}
                 >
-                  {tag.charAt(0).toUpperCase() + tag.slice(1)}
+                  {tag}
                 </span>
               ))}
             </div>
             <div className={classes.companies}>
               <h3>Companies</h3>
-              {companies.sort().map((tag: string) => (
+              {state.companies.sort().map((tag: string) => (
                 <span
                   key={tag}
                   className={`"noselect" ${classes.button} ${
@@ -288,30 +331,32 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
                   }`}
                   onClick={() => handleCompanyFilterClick(tag)}
                 >
-                  {tag.charAt(0).toUpperCase() + tag.slice(1)}
+                  {tag}
                 </span>
               ))}
             </div>
-            <Button
-              component={Link}
-              to={
-                "/feed?" +
-                (selectedCategories.length !== 0
-                  ? "categories=" + selectedCategories.join(",")
-                  : "") +
-                (selectedCompanies.length !== 0
-                  ? "&companies=" + selectedCompanies.join(",")
-                  : "")
-              }
-              onClick={handleCategoryClick}
-              className={classes.goButton}
-              endIcon={<ArrowForwardIcon />}
-              size="large"
-              variant="contained"
-              color="secondary"
-            >
-              Go
-            </Button>
+            <div className={classes.goButtonContainer}>
+              <Button
+                component={Link}
+                to={
+                  "/feed?" +
+                  (selectedCategories.length !== 0
+                    ? "categories=" + selectedCategories.join(",")
+                    : "") +
+                  (selectedCompanies.length !== 0
+                    ? "&companies=" + selectedCompanies.join(",")
+                    : "")
+                }
+                onClick={handleCategoryClick}
+                className={classes.goButton}
+                endIcon={<ArrowForwardIcon />}
+                size="large"
+                variant="contained"
+                color="secondary"
+              >
+                Go
+              </Button>
+            </div>
           </div>
         </div>
       </div>
