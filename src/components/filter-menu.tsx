@@ -128,12 +128,16 @@ const useStyles = makeStyles(theme => ({
     bottom: 10,
     position: "absolute"
   },
+  goButtonContainer: {
+    display: "inline-block",
+    marginTop: 30
+  },
   closeButton: { right: 0, position: "absolute" },
   selectedCategory: {
     border: "2px solid #f15690 !important"
   },
   selectedCompany: {
-    border: "2px solid #70acb1 !important"
+    border: "2px solid #f15690 !important"
   },
   button: {
     variant: "contained",
@@ -159,6 +163,10 @@ const useStyles = makeStyles(theme => ({
 const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
   const classes = useStyles();
 
+  type companyObj = {
+    company: string;
+  };
+
   const emptyArray: string[] = [];
 
   const [state, setState] = useState({
@@ -174,17 +182,20 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
       let categoriesBody = await categoriesRes.json();
       let companiesBody = await companiesRes.json();
       let categories: string[] = categoriesBody.data.resources;
-      let companies: string[] = companiesBody.data.resources;
+
+      let companyObjects: companyObj[] = companiesBody.data.resources;
 
       for (let i = 0; i < categories.length; i++) {
         categories[i] = categories[i].toLowerCase();
       }
       categories = categories.filter((v, i) => categories.indexOf(v) === i);
 
-      for (let i = 0; i < companies.length; i++) {
-        companies[i] = "test".toLowerCase();
+      let companies: string[] = [];
+      for (let i = 0; i < companyObjects.length; i++) {
+        let companyName: string = companyObjects[i].company;
+        companies[i] = companyName;
       }
-      companies.filter((v, i) => companies.indexOf(v) === i);
+      companies = companies.filter(val => val); // Filter out empty string
 
       setState({
         categories: categories,
@@ -304,7 +315,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
                   }`}
                   onClick={() => handleCategoryFilterClick(tag)}
                 >
-                  {tag.charAt(0).toUpperCase() + tag.slice(1)}
+                  {tag}
                 </span>
               ))}
             </div>
@@ -320,30 +331,32 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
                   }`}
                   onClick={() => handleCompanyFilterClick(tag)}
                 >
-                  {tag.charAt(0).toUpperCase() + tag.slice(1)}
+                  {tag}
                 </span>
               ))}
             </div>
-            <Button
-              component={Link}
-              to={
-                "/feed?" +
-                (selectedCategories.length !== 0
-                  ? "categories=" + selectedCategories.join(",")
-                  : "") +
-                (selectedCompanies.length !== 0
-                  ? "&companies=" + selectedCompanies.join(",")
-                  : "")
-              }
-              onClick={handleCategoryClick}
-              className={classes.goButton}
-              endIcon={<ArrowForwardIcon />}
-              size="large"
-              variant="contained"
-              color="secondary"
-            >
-              Go
-            </Button>
+            <div className={classes.goButtonContainer}>
+              <Button
+                component={Link}
+                to={
+                  "/feed?" +
+                  (selectedCategories.length !== 0
+                    ? "categories=" + selectedCategories.join(",")
+                    : "") +
+                  (selectedCompanies.length !== 0
+                    ? "&companies=" + selectedCompanies.join(",")
+                    : "")
+                }
+                onClick={handleCategoryClick}
+                className={classes.goButton}
+                endIcon={<ArrowForwardIcon />}
+                size="large"
+                variant="contained"
+                color="secondary"
+              >
+                Go
+              </Button>
+            </div>
           </div>
         </div>
       </div>
