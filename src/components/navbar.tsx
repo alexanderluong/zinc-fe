@@ -49,7 +49,11 @@ export interface NavBarProps {
   updateSession: (newSession: SystemState) => void;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ loggedIn, userRole, updateSession }) => {
+const NavBar: React.FC<NavBarProps> = ({
+  loggedIn,
+  userRole,
+  updateSession
+}) => {
   const classes = useStyles();
 
   async function logOut() {
@@ -63,8 +67,8 @@ const NavBar: React.FC<NavBarProps> = ({ loggedIn, userRole, updateSession }) =>
   }
 
   async function toDashboard() {
-    const url = 'http://admin.argv.io/';
-    window.open(url, '_blank');
+    const url = "http://admin.argv.io/";
+    window.open(url, "_blank");
   }
 
   if (loggedIn && userRole === "gen") {
@@ -148,7 +152,11 @@ const NavBar: React.FC<NavBarProps> = ({ loggedIn, userRole, updateSession }) =>
             >
               Submit
             </Button>
-            <Button onClick={toDashboard} color="inherit" className={classes.link}>
+            <Button
+              onClick={toDashboard}
+              color="inherit"
+              className={classes.link}
+            >
               Dashboard
             </Button>
             <Button onClick={logOut} color="inherit" className={classes.link}>
@@ -189,7 +197,7 @@ const NavBar: React.FC<NavBarProps> = ({ loggedIn, userRole, updateSession }) =>
             </Button>
             <Button
               component={Link}
-              to="/login"
+              to="/signup"
               color="secondary"
               variant="contained"
               className={classes.link}
