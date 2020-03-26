@@ -182,18 +182,16 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
       let categoriesBody = await categoriesRes.json();
       let companiesBody = await companiesRes.json();
       let categories: string[] = categoriesBody.data.resources;
-
-      let companyObjects: companyObj[] = companiesBody.data.resources;
+      let companies: string[] = companiesBody.data.resources;
 
       for (let i = 0; i < categories.length; i++) {
         categories[i] = categories[i].toLowerCase();
       }
       categories = categories.filter((v, i) => categories.indexOf(v) === i);
 
-      let companies: string[] = [];
-      for (let i = 0; i < companyObjects.length; i++) {
-        let companyName: string = companyObjects[i].company;
-        companies[i] = companyName;
+      for (let i = 0; i < companies.length; i++) {
+        companies[i] = "todo";
+        //companies[i] = companies[i].toLowerCase();
       }
       companies = companies.filter(val => val); // Filter out empty string
 
@@ -218,8 +216,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
   const [menuAnchorClass, setMenuAnchorClass] = useState("");
 
   const addCategory = (category: string) => {
-    //setSelectedCategories([...selectedCategories, category]);
-    setSelectedCategories([category]);
+    setSelectedCategories([...selectedCategories, category]);
   };
 
   const removeCategory = (category: string) => {
@@ -227,8 +224,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
   };
 
   const addCompany = (company: string) => {
-    //setSelectedCompanies([...selectedCompanies, company]);
-    setSelectedCompanies([company]);
+    setSelectedCompanies([...selectedCompanies, company]);
   };
 
   const removeCompany = (company: string) => {
