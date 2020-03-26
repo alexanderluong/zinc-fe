@@ -21,6 +21,18 @@ interface ParamTypes {
   tag: string;
 }
 
+function getQueryVariable(variable: string) {
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split("=");
+    if (decodeURIComponent(pair[0]) == variable) {
+      return decodeURIComponent(pair[1]);
+    }
+  }
+  console.log("Query variable %s not found", variable);
+}
+
 export const PlainFeed: React.FC<PlainFeedProps> = ({ params }) => {
   const [feed_tag, setTag] = useState(undefined);
   const [company, setCompany] = useState(undefined);
@@ -28,21 +40,13 @@ export const PlainFeed: React.FC<PlainFeedProps> = ({ params }) => {
 
   const classes = useStyles();
 
-  const queryString = require("query-string");
-  console.log(params);
-  let parsedParams = queryString.parse(params);
+  let paramsCategories = getQueryVariable("categories");
+  let paramsCompanies = getQueryVariable("companies");
 
   let categories =
-    parsedParams.categories !== undefined
-      ? parsedParams.categories.split(",")
-      : [];
+    paramsCategories !== undefined ? paramsCategories.split(",") : [];
   let companies =
-    parsedParams.companies !== undefined
-      ? parsedParams.companies.split(",")
-      : [];
-
-  console.log(categories);
-  console.log(companies);
+    paramsCompanies !== undefined ? paramsCompanies.split(",") : [];
 
   return (
     <React.Fragment>

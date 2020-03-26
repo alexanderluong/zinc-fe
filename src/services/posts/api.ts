@@ -16,6 +16,7 @@ export async function fetchFeed(
     if (tags[0]) req_url = req_url + "category=" + tags[0];
     if (tags[0] && companies[0]) req_url += "&";
     if (companies[0]) req_url = req_url + "company=" + companies[0];
+
     console.log(req_url);
 
     return await fetch(req_url, req);
