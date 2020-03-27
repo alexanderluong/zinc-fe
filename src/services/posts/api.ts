@@ -16,7 +16,6 @@ export async function fetchFeed(
     };
 
     let req_url = `${BASE_API}/feed`;
-
     return await fetch(req_url, req);
   } catch (err) {
     // Process?
