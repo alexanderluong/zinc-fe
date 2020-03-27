@@ -189,10 +189,6 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
       }
       categories = categories.filter((v, i) => categories.indexOf(v) === i);
 
-      for (let i = 0; i < companies.length; i++) {
-        companies[i] = "todo";
-        //companies[i] = companies[i].toLowerCase();
-      }
       companies = companies.filter(val => val); // Filter out empty string
 
       setState({
@@ -314,6 +310,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
                   {tag}
                 </span>
               ))}
+              {state.categories.length === 0 ? "Nothing here yet!" : ""}
             </div>
             <div className={classes.companies}>
               <h3>Companies</h3>
@@ -330,6 +327,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
                   {tag}
                 </span>
               ))}
+              {state.companies.length === 0 ? "Nothing here yet!" : ""}
             </div>
             <div className={classes.goButtonContainer}>
               <Button

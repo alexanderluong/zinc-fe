@@ -10,18 +10,19 @@ import {
 } from "@material-ui/core";
 import "./submitform.css";
 import { Redirect } from "react-router-dom";
+import Alert from "@material-ui/lab/Alert";
 
 export interface SubmitFormProps {
   loggedIn: boolean;
 }
 
 const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
+  const [successMessage, setSuccessMessage] = useState(false);
   const [state, setState] = useState({
     isLoading: false,
     title: "",
     uri: "",
     type: "article",
-    submitted: false,
     error: {
       title_error: false,
       uri_error: false,
@@ -30,17 +31,23 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
     }
   });
 
+  function clearForm() {
+    setState({
+      isLoading: false,
+      title: "",
+      uri: "",
+      type: "article",
+      error: {
+        title_error: false,
+        uri_error: false,
+        title: "",
+        uri: ""
+      }
+    });
+  }
+
   function uriIsValid(uri: string) {
-    const pattern = new RegExp(
-      "^(https?:\\/\\/)" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-        "(\\#[-a-z\\d_]*)?$",
-      "i"
-    ); // fragment locator
-    return !!pattern.test(uri);
+    return uri.startsWith("http://") || uri.startsWith("https://");
   }
 
   async function onSubmit() {
@@ -79,8 +86,9 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
     setState(Object.assign({}, state, { isLoading: false }));
     // Handle
     if (res.ok) {
-      setState(Object.assign({}, state, { submitted: true }));
-      alert("Post successfully submitted!");
+      setSuccessMessage(true);
+      clearForm();
+      return;
     } else {
       let body = await res.json();
       console.log(body);
@@ -104,6 +112,11 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
   else {
     return (
       <div id="form-submission">
+        {successMessage ? (
+          <Alert severity="success">Post successfully submitted!</Alert>
+        ) : (
+          ""
+        )}
         <h3 className="section-heading">Submit a new post.</h3>
         <form autoComplete="off">
           <Grid container spacing={1}>
