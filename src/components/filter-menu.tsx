@@ -318,6 +318,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
                   {tag}
                 </span>
               ))}
+              {state.categories.length === 0 ? "Nothing here yet!" : ""}
             </div>
             <div className={classes.companies}>
               <h3>Companies</h3>
@@ -334,6 +335,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
                   {tag}
                 </span>
               ))}
+              {state.companies.length === 0 ? "Nothing here yet!" : ""}
             </div>
             <div className={classes.goButtonContainer}>
               <Button
