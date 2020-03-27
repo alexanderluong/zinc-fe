@@ -91,7 +91,6 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
       return;
     } else {
       let body = await res.json();
-      console.log(body);
       if (body.type === "OperationalError") {
         error.uri_error = true;
         error.uri = "This link has already been submitted.";
