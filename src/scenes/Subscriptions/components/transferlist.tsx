@@ -179,8 +179,8 @@ const TransferList: React.FC<TransferListProps> = ({
       </Grid>
       <br />
       <Grid item>
-        <h2>Your Subscriptions</h2>
-        {customList(userSubs)}
+        <h2>All Subscriptions</h2>
+        {customList(allSubs)}
       </Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
@@ -188,8 +188,8 @@ const TransferList: React.FC<TransferListProps> = ({
             variant="outlined"
             size="small"
             className={classes.button}
-            onClick={handleAllRight}
-            disabled={userSubs.length === 0}
+            onClick={handleAllLeft}
+            disabled={allSubs.length === 0}
             aria-label="move all right"
           >
             ≫
@@ -198,8 +198,8 @@ const TransferList: React.FC<TransferListProps> = ({
             variant="outlined"
             size="small"
             className={classes.button}
-            onClick={handleCheckedRight}
-            disabled={leftChecked.length === 0}
+            onClick={handleCheckedLeft}
+            disabled={rightChecked.length === 0}
             aria-label="move selected right"
           >
             &gt;
@@ -208,8 +208,8 @@ const TransferList: React.FC<TransferListProps> = ({
             variant="outlined"
             size="small"
             className={classes.button}
-            onClick={handleCheckedLeft}
-            disabled={rightChecked.length === 0}
+            onClick={handleCheckedRight}
+            disabled={leftChecked.length === 0}
             aria-label="move selected left"
           >
             &lt;
@@ -218,8 +218,8 @@ const TransferList: React.FC<TransferListProps> = ({
             variant="outlined"
             size="small"
             className={classes.button}
-            onClick={handleAllLeft}
-            disabled={allSubs.length === 0}
+            onClick={handleAllRight}
+            disabled={userSubs.length === 0}
             aria-label="move all left"
           >
             ≪
@@ -227,8 +227,8 @@ const TransferList: React.FC<TransferListProps> = ({
         </Grid>
       </Grid>
       <Grid item>
-        <h2>All Subscriptions</h2>
-        {customList(allSubs)}
+        <h2>My Subscriptions</h2>
+        {customList(userSubs)}
       </Grid>
       <Button variant="contained" onClick={onSubscribe}>
         Update
