@@ -232,7 +232,7 @@ const TransferList: React.FC<TransferListProps> = ({
         {customList(userSubs)}
       </Grid>
       <Button className={classes.button} variant="outlined" onClick={onSubscribe}>
-        Update
+        <p className="button-text">Update</p>
       </Button>
     </Grid>
   );
