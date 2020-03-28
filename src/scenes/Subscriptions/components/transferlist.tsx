@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { putUser } from "services/users/api";
 import Grid from "@material-ui/core/Grid";
@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: "auto"
     },
     button: {
-      margin: theme.spacing(0.5, 0)
+      margin: theme.spacing(0.5, 0),
+      backgroundColor: "#d4d4d4"
     }
   })
 );
@@ -192,7 +193,7 @@ const TransferList: React.FC<TransferListProps> = ({
             disabled={allSubs.length === 0}
             aria-label="move all right"
           >
-            ≫
+            <p className="arrow-text">≫</p>
           </Button>
           <Button
             variant="outlined"
@@ -202,7 +203,7 @@ const TransferList: React.FC<TransferListProps> = ({
             disabled={rightChecked.length === 0}
             aria-label="move selected right"
           >
-            &gt;
+            <p className="arrow-text">&gt;</p>
           </Button>
           <Button
             variant="outlined"
@@ -212,7 +213,7 @@ const TransferList: React.FC<TransferListProps> = ({
             disabled={leftChecked.length === 0}
             aria-label="move selected left"
           >
-            &lt;
+            <p className="arrow-text">&lt;</p>
           </Button>
           <Button
             variant="outlined"
@@ -222,15 +223,15 @@ const TransferList: React.FC<TransferListProps> = ({
             disabled={userSubs.length === 0}
             aria-label="move all left"
           >
-            ≪
+            <p className="arrow-text">≪</p>
           </Button>
         </Grid>
       </Grid>
       <Grid item>
-        <h2>My Subscriptions</h2>
+        <h2>Current Subscriptions</h2>
         {customList(userSubs)}
       </Grid>
-      <Button variant="contained" onClick={onSubscribe}>
+      <Button className={classes.button} variant="outlined" onClick={onSubscribe}>
         Update
       </Button>
     </Grid>
