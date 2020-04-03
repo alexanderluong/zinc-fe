@@ -15,3 +15,17 @@
 .alert {
     max-width: 500px;
 }
+
+.arrow {
+    border-width: 10px;
+    margin: 10px !important;
+}
+
+.arrow-text {
+    font-size: 16px;
+    padding-top: 3px;
+}
+
+.button-text {
+    padding-top: 3px;
+}
