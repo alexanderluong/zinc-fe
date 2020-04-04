@@ -22,8 +22,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ updateSession, loggedIn }) => {
       email_state: false,
       password_state: false,
       email_message: "",
-      password_message: ""
-    }
+      password_message: "",
+    },
   });
 
   async function onLogin() {
@@ -31,7 +31,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ updateSession, loggedIn }) => {
       email_state: false,
       password_state: false,
       email_message: "",
-      password_message: ""
+      password_message: "",
     };
 
     if (state.email === "") {
@@ -58,13 +58,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ updateSession, loggedIn }) => {
     // Handle
     if (res.ok) {
       let body = await res.json();
-      console.log(body.data);
+      //console.log(body.data);
       updateSession({
         loggedIn: true,
         session: body.data.token,
         firstName: body.data.user.firstName,
         lastName: body.data.user.lastName,
-        userRole: body.data.user.role
+        userRole: body.data.user.role,
       });
     } else {
       let body = await res.json();
@@ -91,10 +91,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ updateSession, loggedIn }) => {
                   className="input"
                   label="Email"
                   value={state.email}
-                  onChange={e =>
+                  onChange={(e) =>
                     setState(
                       Object.assign({}, state, {
-                        email: e.target.value
+                        email: e.target.value,
                       })
                     )
                   }
@@ -111,10 +111,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ updateSession, loggedIn }) => {
                   label="Password"
                   type="password"
                   value={state.password}
-                  onChange={e =>
+                  onChange={(e) =>
                     setState(
                       Object.assign({}, state, {
-                        password: e.target.value
+                        password: e.target.value,
                       })
                     )
                   }

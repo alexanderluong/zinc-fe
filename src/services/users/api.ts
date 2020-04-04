@@ -5,10 +5,9 @@ export async function auth(email: string, password: string): Promise<Response> {
     let req = {
       method: "post",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
     };
 
-    console.log("b");
     return await fetch(`${BASE_API}/users/auth`, req);
   } catch (err) {
     // Process?
@@ -16,12 +15,17 @@ export async function auth(email: string, password: string): Promise<Response> {
   }
 }
 
-export async function createUser(firstName: string, lastName: string, email: string, password: string) {
+export async function createUser(
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string
+) {
   try {
     let req = {
       method: "post",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ firstName, lastName, email, password })
+      body: JSON.stringify({ firstName, lastName, email, password }),
     };
 
     // console.log(req.body);
@@ -37,7 +41,10 @@ export async function getUserInfo(userToken: string): Promise<Response> {
   try {
     let req = {
       method: "get",
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + userToken }
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + userToken,
+      },
     };
 
     return await fetch(`${BASE_API}/users/me`, req);
@@ -47,12 +54,18 @@ export async function getUserInfo(userToken: string): Promise<Response> {
   }
 }
 
-export async function putUser(userToken: string, userSubscriptions: string[]): Promise<Response> {
+export async function putUser(
+  userToken: string,
+  userSubscriptions: string[]
+): Promise<Response> {
   try {
     let req = {
       method: "put",
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + userToken },
-      body: JSON.stringify({subscriptions: userSubscriptions})
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + userToken,
+      },
+      body: JSON.stringify({ subscriptions: userSubscriptions }),
     };
 
     return await fetch(`${BASE_API}/users/`, req);

@@ -6,29 +6,46 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Grid
+  Grid,
 } from "@material-ui/core";
 import "./submitform.css";
 import { Redirect } from "react-router-dom";
+import Alert from "@material-ui/lab/Alert";
 
 export interface SubmitFormProps {
   loggedIn: boolean;
+  sessionToken: string;
 }
 
-const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
+const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn, sessionToken }) => {
+  const [successMessage, setSuccessMessage] = useState(false);
   const [state, setState] = useState({
     isLoading: false,
     title: "",
     uri: "",
     type: "article",
-    submitted: false,
     error: {
       title_error: false,
       uri_error: false,
       title: "",
-      uri: ""
-    }
+      uri: "",
+    },
   });
+
+  function clearForm() {
+    setState({
+      isLoading: false,
+      title: "",
+      uri: "",
+      type: "article",
+      error: {
+        title_error: false,
+        uri_error: false,
+        title: "",
+        uri: "",
+      },
+    });
+  }
 
   function uriIsValid(uri: string) {
     return uri.startsWith("http://") || uri.startsWith("https://");
@@ -39,7 +56,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
       title_error: false,
       uri_error: false,
       title: "",
-      uri: ""
+      uri: "",
     };
 
     if (state.uri === "") {
@@ -59,22 +76,27 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
     if (error.title_error || error.uri_error) {
       setState(
         Object.assign({}, state, {
-          error: error
+          error: error,
         })
       );
       return;
     }
 
     setState(Object.assign({}, state, { isLoading: true }));
-    let res = await submitPost(state.title, state.uri, state.type);
+    let res = await submitPost(
+      state.title,
+      state.uri,
+      state.type,
+      sessionToken
+    );
     setState(Object.assign({}, state, { isLoading: false }));
     // Handle
     if (res.ok) {
-      setState(Object.assign({}, state, { submitted: true }));
-      alert("Post successfully submitted!");
+      setSuccessMessage(true);
+      clearForm();
+      return;
     } else {
       let body = await res.json();
-      console.log(body);
       if (body.type === "OperationalError") {
         error.uri_error = true;
         error.uri = "This link has already been submitted.";
@@ -95,6 +117,11 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
   else {
     return (
       <div id="form-submission">
+        {successMessage ? (
+          <Alert severity="success">Post successfully submitted!</Alert>
+        ) : (
+          ""
+        )}
         <h3 className="section-heading">Submit a new post.</h3>
         <form autoComplete="off">
           <Grid container spacing={1}>
@@ -106,7 +133,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
                   className="input"
                   label="Title"
                   value={state.title}
-                  onChange={e =>
+                  onChange={(e) =>
                     setState(
                       Object.assign({}, state, { title: e.target.value })
                     )
@@ -122,7 +149,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
                   className="input"
                   label="Link"
                   value={state.uri}
-                  onChange={e =>
+                  onChange={(e) =>
                     setState(Object.assign({}, state, { uri: e.target.value }))
                   }
                 />
@@ -136,7 +163,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn }) => {
                     labelId="type"
                     id="select"
                     value={state.type}
-                    onChange={e =>
+                    onChange={(e) =>
                       setState(
                         Object.assign({}, state, { type: e.target.value })
                       )
