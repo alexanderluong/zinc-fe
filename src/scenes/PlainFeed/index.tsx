@@ -9,12 +9,12 @@ export interface PlainFeedProps {
   key: any;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   feedcontainer: {
     boxShadow: "none",
     top: 50,
-    position: "relative"
-  }
+    position: "relative",
+  },
 }));
 
 interface ParamTypes {
@@ -30,7 +30,7 @@ function getQueryVariable(variable: string) {
       return decodeURIComponent(pair[1]);
     }
   }
-  console.log("Query variable %s not found", variable);
+  //console.log("Query variable %s not found", variable);
 }
 
 export const PlainFeed: React.FC<PlainFeedProps> = ({ params }) => {

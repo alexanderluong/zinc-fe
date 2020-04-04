@@ -10,6 +10,5 @@ export const SubmitPostScene: React.FC<SubmitPostSceneProps> = ({
   loggedIn,
   sessionToken,
 }) => {
-  console.log(sessionToken);
   return <SubmitForm loggedIn={loggedIn} sessionToken={sessionToken} />;
 };

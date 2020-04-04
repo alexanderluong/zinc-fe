@@ -49,7 +49,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
     if (state.first_name === "") {
       error.first_name_state = true;
       error.first_name_message = "Please enter a first name.";
-      console.log("boop");
     }
 
     if (state.first_name === "") {
@@ -102,7 +101,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
     // Handle
     if (res.ok) {
       let body = await res.json();
-      console.log(body.data);
+      //console.log(body.data);
       updateSession({
         loggedIn: true,
         session: body.data.token,
@@ -112,13 +111,13 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
       });
     } else {
       let body = await res.json();
-      console.log(body);
+      //console.log(body);
       if (body.type === "OperationalError") {
         error.email_state = true;
         error.email_message = state.email + " is already registered.";
       } else if (body.type === "SchemaValidationError") {
         for (let req_error of body.meta.errors) {
-          console.log(error);
+          //console.log(error);
           if (req_error.keyword === "format") {
             error.email_state = true;
             error.email_message = "Please enter a valid email address.";

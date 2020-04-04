@@ -13,8 +13,6 @@ export interface FeedProps {
 }
 
 const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
-  console.log(companies);
-  console.log(tags);
   let heading = "";
   if (tags && tags.length > 0) {
     let capitalizedCategories = [];
@@ -40,11 +38,10 @@ const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
   const [state, setState] = useState({
     isLoading: false,
     articles: [],
-    heading: heading === "" ? "Latest Articles" : heading
+    heading: heading === "" ? "Latest Articles" : heading,
   });
 
   async function componentDidMount() {
-    console.log(tags);
     setState(Object.assign({}, state, { isLoading: true }));
     let res = await fetchFeed(tags, companies, search);
     setState(Object.assign({}, state, { isLoading: false }));
@@ -52,7 +49,6 @@ const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
     if (res.ok) {
       let body = await res.json();
       let articles = body.data.resources;
-      console.log(articles);
       setState(Object.assign({}, state, { articles: articles }));
     } else alert("Try again");
   }
@@ -80,7 +76,7 @@ const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
               {new Intl.DateTimeFormat("en-US", {
                 month: "long",
                 day: "numeric",
-                year: "numeric"
+                year: "numeric",
               }).format(article.date)}
             </span>
             <div className="article-title">
