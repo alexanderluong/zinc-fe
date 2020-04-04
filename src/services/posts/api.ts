@@ -11,8 +11,8 @@ export async function fetchFeed(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         categories: tags,
-        companies: companies
-      })
+        companies: companies,
+      }),
     };
 
     let req_url = `${BASE_API}/feed`;
@@ -23,12 +23,20 @@ export async function fetchFeed(
   }
 }
 
-export async function submitPost(title: string, uri: string, type: string) {
+export async function submitPost(
+  title: string,
+  uri: string,
+  type: string,
+  sessionToken: string
+) {
   try {
     let req = {
       method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, uri, type })
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionToken,
+      },
+      body: JSON.stringify({ title, uri, type }),
     };
 
     return await fetch(`${BASE_API}/posts`, req);
