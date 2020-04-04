@@ -26,13 +26,17 @@ const Router: React.FC<AppProps> = ({ updateSession, session }) => {
     <BrowserRouter>
       <React.Fragment>
         <div id="navbar-bg"></div>
-        <NavBar loggedIn={session.loggedIn} userRole={session.userRole} updateSession={updateSession} />
+        <NavBar
+          loggedIn={session.loggedIn}
+          userRole={session.userRole}
+          updateSession={updateSession}
+        />
         <div>
           <Switch>
             <Route
               exact
               path="/"
-              render={AppProps => (
+              render={(AppProps) => (
                 <FeedScene
                   loggedIn={session.loggedIn}
                   firstName={session.firstName}
@@ -42,7 +46,7 @@ const Router: React.FC<AppProps> = ({ updateSession, session }) => {
             <Route
               exact
               path="/login"
-              render={AppProps => (
+              render={(AppProps) => (
                 <LoginScene
                   updateSession={updateSession}
                   loggedIn={session.loggedIn}
@@ -52,7 +56,7 @@ const Router: React.FC<AppProps> = ({ updateSession, session }) => {
             <Route
               exact
               path="/feed"
-              render={AppProps => (
+              render={(AppProps) => (
                 <PlainFeed
                   key={AppProps.location.search}
                   params={AppProps.location.search}
@@ -62,14 +66,17 @@ const Router: React.FC<AppProps> = ({ updateSession, session }) => {
             <Route
               exact
               path="/submit"
-              render={AppProps => (
-                <SubmitPostScene loggedIn={session.loggedIn} />
+              render={(AppProps) => (
+                <SubmitPostScene
+                  loggedIn={session.loggedIn}
+                  sessionToken={session.session}
+                />
               )}
             />
             <Route
               exact
               path="/signup"
-              render={AppProps => (
+              render={(AppProps) => (
                 <SignUpScene
                   updateSession={updateSession}
                   loggedIn={session.loggedIn}
@@ -79,17 +86,19 @@ const Router: React.FC<AppProps> = ({ updateSession, session }) => {
             <Route
               exact
               path="/subscriptions"
-              render={AppProps => <SubscriptionsScene systemState={session} />}
+              render={(AppProps) => (
+                <SubscriptionsScene systemState={session} />
+              )}
             />
             <Route
               exact
               path="/tags/:tag"
-              render={AppProps => <TagFeed key={AppProps.match.params.tag} />}
+              render={(AppProps) => <TagFeed key={AppProps.match.params.tag} />}
             />
             <Route
               exact
               path="/company/:company"
-              render={AppProps => (
+              render={(AppProps) => (
                 <CompanyFeed key={AppProps.match.params.company} />
               )}
             />
@@ -102,7 +111,7 @@ const Router: React.FC<AppProps> = ({ updateSession, session }) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  session: state.system
+  session: state.system,
 });
 
 export default connect(mapStateToProps, { updateSession })(Router);

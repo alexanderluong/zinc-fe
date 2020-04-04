@@ -28,8 +28,8 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
       email_message: "",
       password_message: "",
       confirm_password_state: false,
-      confirm_password_message: ""
-    }
+      confirm_password_message: "",
+    },
   });
 
   async function onSignUp() {
@@ -43,7 +43,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
       email_message: "",
       password_message: "",
       confirm_password_state: false,
-      confirm_password_message: ""
+      confirm_password_message: "",
     };
 
     if (state.first_name === "") {
@@ -108,7 +108,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
         session: body.data.token,
         firstName: body.data.user.firstName,
         lastName: body.data.user.lastName,
-        userRole: body.data.user.role
+        userRole: body.data.user.role,
       });
     } else {
       let body = await res.json();
@@ -149,10 +149,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
                   className="input"
                   label="First Name"
                   value={state.first_name}
-                  onChange={e =>
+                  onChange={(e) =>
                     setState(
                       Object.assign({}, state, {
-                        first_name: e.target.value
+                        first_name: e.target.value,
                       })
                     )
                   }
@@ -168,10 +168,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
                   className="input"
                   label="Last Name"
                   value={state.last_name}
-                  onChange={e =>
+                  onChange={(e) =>
                     setState(
                       Object.assign({}, state, {
-                        last_name: e.target.value
+                        last_name: e.target.value,
                       })
                     )
                   }
@@ -187,10 +187,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
                   className="input"
                   label="Email"
                   value={state.email}
-                  onChange={e =>
+                  onChange={(e) =>
                     setState(
                       Object.assign({}, state, {
-                        email: e.target.value
+                        email: e.target.value,
                       })
                     )
                   }
@@ -207,10 +207,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
                   label="Password"
                   type="password"
                   value={state.password}
-                  onChange={e =>
+                  onChange={(e) =>
                     setState(
                       Object.assign({}, state, {
-                        password: e.target.value
+                        password: e.target.value,
                       })
                     )
                   }
@@ -227,10 +227,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ updateSession, loggedIn }) => {
                   label="Confirm Password"
                   type="password"
                   value={state.confirm_password}
-                  onChange={e =>
+                  onChange={(e) =>
                     setState(
                       Object.assign({}, state, {
-                        confirm_password: e.target.value
+                        confirm_password: e.target.value,
                       })
                     )
                   }
