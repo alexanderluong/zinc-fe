@@ -34,6 +34,7 @@ body {
   background: #f15690;
   color: white;
 }
+
 ::selection {
   background: #f15690;
   color: white;
@@ -75,7 +76,7 @@ body {
 
 @media only screen and (max-width: 593px) {
   #navbar-bg {
-    height: 48px;
+    height: 50px;
   }
 }
 

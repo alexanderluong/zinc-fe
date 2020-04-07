@@ -2,6 +2,13 @@
   height: 50vh !important;
 }
 
+@media only screen and (max-device-width: 640px) {
+  .logged-in-class {
+    height: 70vh !important;
+  }
+}
+
+
 #banner {
   color: white;
   z-index: 150;
@@ -64,6 +71,7 @@
   margin: 0 auto;
   padding-left: 30px;
   padding-right: 30px;
+  margin-bottom: 20px;
 }
 
 .translu {
@@ -79,7 +87,7 @@
   margin: 0 auto;
 }
 
-span.line {
+.line {
   display: inline-block;
 }
 
@@ -110,13 +118,18 @@ span.line {
 }
 
 @media only screen and (max-device-width: 640px) {
+
+  .emphasis.translu.play-font {
+    font-size: 36px !important;
+  }
+
   #banner {}
 
   #banner-container {}
 
   .banner-title-text {
-    font-size: 36px;
-    line-height: 0.4;
+    font-size: 28px;
+    line-height: 0.9;
   }
 
   .banner-descr-text {

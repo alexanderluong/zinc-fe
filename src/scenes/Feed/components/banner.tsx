@@ -22,20 +22,22 @@ const Banner: React.FC<BannerProps> = ({ loggedIn, firstName }) => {
         <div id="banner">
           <div className={"welcome-text "}>
             <div className="banner-title-text">
-              <span
-                className="play-font emphasis translu"
-                style={{ fontSize: "72px", top: "20px" }}
-              >
-                &ldquo;
-              </span>
-              <span className="play-font">
-                <span className="line">
-                  Hello, <span className="blu">Vancouver</span>.&nbsp;
-                </span>
-                <span className="line"> Hello, {welcomeAddressee}!</span>
+              <span className="line">
                 <span
                   className="play-font emphasis translu"
-                  style={{ fontSize: "72px", top: "20px" }}
+                  style={{ fontSize: "72px" }}
+                >
+                  &ldquo;
+                </span>
+                <span className="play-font">
+                  Hello, <span className="blu">Vancouver</span>.&nbsp;
+                </span>
+              </span>
+              <span className="line">
+                <span className="play-font"> Hello, {welcomeAddressee}!</span>
+                <span
+                  className="play-font emphasis translu"
+                  style={{ fontSize: "72px" }}
                 >
                   &rdquo;
                 </span>
