@@ -60,7 +60,8 @@
 .banner-title-text {
   font-size: 48px;
   line-height: 0.6;
-  margin-left: auto;
+  max-width: 80%;
+  margin: 0 auto;
   padding-left: 30px;
   padding-right: 30px;
 }

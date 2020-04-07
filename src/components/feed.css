@@ -7,8 +7,10 @@
   background-color: white;
   border-radius: 15px;
   width: 700px;
+  max-width: 100%;
   display: inline-block;
   vertical-align: top;
+  text-align: left;
 }
 
 .article-title {
@@ -50,12 +52,13 @@
   position: relative;
   padding-top: 90px;
   padding-bottom: 70px;
-  padding-left: 15vw;
-  padding-right: 15vw;
+  padding-left: 200px;
+  padding-right: 200px;
   width: 100%;
   margin: 0 auto;
   -ms-overflow-style: none;
   z-index: 0;
+  text-align: center;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
