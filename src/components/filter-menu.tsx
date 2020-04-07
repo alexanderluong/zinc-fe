@@ -125,12 +125,12 @@ const useStyles = makeStyles((theme) => ({
   filter_buttons: { padding: 30 },
   goButton: {
     right: 10,
-    bottom: 10,
     position: "absolute",
   },
   goButtonContainer: {
     display: "inline-block",
     marginTop: 30,
+    bottom: 10,
   },
   closeButton: { right: 0, position: "absolute" },
   selectedCategory: {
@@ -227,6 +227,11 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
 
   const removeCompany = (company: string) => {
     setSelectedCompanies(selectedCompanies.filter((item) => item !== company));
+  };
+
+  const clearFilters = () => {
+    setSelectedCompanies([]);
+    setSelectedCategories([]);
   };
 
   const handleCategoryFilterClick = (category: string) => {
@@ -331,6 +336,9 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
               {state.companies.length === 0 ? "Nothing here yet!" : ""}
             </div>
             <div className={classes.goButtonContainer}>
+              <Button onClick={clearFilters} variant="outlined">
+                Clear Filters
+              </Button>
               <Button
                 component={Link}
                 to={
