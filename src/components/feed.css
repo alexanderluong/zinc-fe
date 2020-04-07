@@ -7,8 +7,18 @@
   background-color: white;
   border-radius: 15px;
   width: 700px;
+  max-width: 100%;
   display: inline-block;
   vertical-align: top;
+  text-align: left;
+}
+
+@media only screen and (max-device-width: 640px) {
+  .article {
+    width: 100% !important;
+    margin: 0 auto !important;
+    margin-bottom: 20px !important;
+  }
 }
 
 .article-title {
@@ -46,16 +56,33 @@
   background: rgb(241, 86, 144, 1) !important;
 }
 
+@media only screen and (max-device-width: 640px) {
+  #popup-container {
+    width: 100vw;
+  }
+}
+
 #feed-container {
   position: relative;
   padding-top: 90px;
   padding-bottom: 70px;
-  padding-left: 15vw;
-  padding-right: 15vw;
+  padding-left: 200px;
+  padding-right: 200px;
   width: 100%;
   margin: 0 auto;
   -ms-overflow-style: none;
   z-index: 0;
+  text-align: center;
+}
+
+@media only screen and (max-device-width: 640px) {
+  #feed-container {
+    text-align: left;
+    padding-top: 90px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 70px;
+  }
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

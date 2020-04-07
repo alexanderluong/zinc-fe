@@ -177,6 +177,8 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
     companies: emptyArray,
   });
 
+  const [search, setSearch] = useState("");
+
   async function componentDidMount() {
     let categoriesRes = await getSubscriptions();
     let companiesRes = await getCompanies();
@@ -273,6 +275,17 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
       setShowCategoryPopup("");
     } else {
       setShowCategoryPopup(SHOW_CATEGORY_POPUP);
+    }
+  };
+
+  const submitSearch = () => {
+    console.log("search " + search);
+    window.location.href = "/feed?title=" + search;
+  };
+
+  const handleSearchKeyPress = (event: any) => {
+    if (event.key === "Enter") {
+      submitSearch();
     }
   };
 
@@ -376,16 +389,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
             >
               Filter
             </Button>
-          </Toolbar>
-        </AppBar>
-      </div>
-    </React.Fragment>
-  );
-};
-
-/* 
-
-<div className={classes.grow} />
+            <div className={classes.grow} />
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -394,12 +398,19 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
                 placeholder="Search…"
                 classes={{
                   root: classes.inputRoot,
-                  input: classes.inputInput
+                  input: classes.inputInput,
                 }}
                 inputProps={{ "aria-label": "search" }}
+                onKeyUp={handleSearchKeyPress}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-
-            */
+          </Toolbar>
+        </AppBar>
+      </div>
+    </React.Fragment>
+  );
+};
 
 export default FilterMenu;

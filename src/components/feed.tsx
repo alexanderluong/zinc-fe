@@ -35,6 +35,15 @@ const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
     }
     heading += capitalizedCompanies.join(", ");
   }
+  if (
+    ((tags && tags.length > 0) || (companies && companies.length > 0)) &&
+    search !== undefined &&
+    search !== ""
+  )
+    heading += " & ";
+  if (search !== undefined && search !== "") {
+    heading += "Keyword search: " + search;
+  }
 
   const [state, setState] = useState({
     isLoading: false,
@@ -44,7 +53,6 @@ const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
   });
 
   async function componentDidMount() {
-    console.log(process.env);
     setState(Object.assign({}, state, { isLoading: true }));
     let res = await fetchFeed(tags, companies, search);
     setState(Object.assign({}, state, { isLoading: false }));

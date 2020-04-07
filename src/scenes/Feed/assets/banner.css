@@ -2,6 +2,13 @@
   height: 50vh !important;
 }
 
+@media only screen and (max-device-width: 640px) {
+  .logged-in-class {
+    height: 70vh !important;
+  }
+}
+
+
 #banner {
   color: white;
   z-index: 150;
@@ -60,9 +67,11 @@
 .banner-title-text {
   font-size: 48px;
   line-height: 0.6;
-  margin-left: auto;
+  max-width: 80%;
+  margin: 0 auto;
   padding-left: 30px;
   padding-right: 30px;
+  margin-bottom: 20px;
 }
 
 .translu {
@@ -76,18 +85,21 @@
   width: 60%;
   min-width: 350px;
   margin: 0 auto;
-  margin-top: 20px;
 }
 
-span.line {
+.line {
+  display: inline-block;
+}
+
+.scroll-indication {
+  margin-top: 80px;
+  opacity: 0.6;
 }
 
 @media only screen and (max-width: 700px) {
-  #banner {
-  }
+  #banner {}
 
-  #banner-container {
-  }
+  #banner-container {}
 
   .banner-title-text {
     font-size: 36px;
@@ -102,5 +114,28 @@ span.line {
 @media only screen and (max-height: 500px) {
   .welcome-text {
     top: 20%;
+  }
+}
+
+@media only screen and (max-device-width: 640px) {
+
+  .emphasis.translu.play-font {
+    font-size: 36px !important;
+  }
+
+  #banner {}
+
+  #banner-container {}
+
+  .banner-title-text {
+    font-size: 28px;
+    line-height: 0.9;
+  }
+
+  .banner-descr-text {
+    margin-top: 20px;
+    font-size: 16px;
+    min-width: 0px;
+    width: 80%;
   }
 }
