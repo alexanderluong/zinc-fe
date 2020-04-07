@@ -7,39 +7,40 @@ import {
   Button,
   makeStyles,
   createStyles,
-  Theme
+  Theme,
 } from "@material-ui/core";
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import { SystemState } from "store/system/types";
+import { ADMIN_DASHBOARD_LINK } from "../config";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1
+      flexGrow: 1,
     },
     bar: {
       background:
         "linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(25,38,48,0))",
       boxShadow: "none",
-      zIndex: 30000
+      zIndex: 30000,
     },
     menuButton: {
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(2),
     },
     title: {
       flexGrow: 1,
       "&:hover": {
-        color: "#FFF"
+        color: "#FFF",
       },
       fontFamily: '"Playfair Display", sans-serif',
-      fontWeight: 700
+      fontWeight: 700,
     },
     link: {
       "&:hover": {
-        color: "#FFF"
+        color: "#FFF",
       },
-      marginLeft: 10
-    }
+      marginLeft: 10,
+    },
   })
 );
 
@@ -52,7 +53,7 @@ export interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = ({
   loggedIn,
   userRole,
-  updateSession
+  updateSession,
 }) => {
   const classes = useStyles();
 
@@ -62,12 +63,12 @@ const NavBar: React.FC<NavBarProps> = ({
       session: "",
       firstName: "",
       lastName: "",
-      userRole: ""
+      userRole: "",
     });
   }
 
   async function toDashboard() {
-    const url = "http://admin.argv.io/";
+    const url = `${ADMIN_DASHBOARD_LINK}`;
     window.open(url, "_blank");
   }
 

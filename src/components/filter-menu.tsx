@@ -106,6 +106,9 @@ const useStyles = makeStyles((theme) => ({
   popup_container: {
     backgroundColor: "white",
     height: "auto",
+    maxHeight: "90vh",
+    overflow: "scroll",
+    overflowX: "hidden",
     width: "500px",
     position: "absolute",
     margin: 0,
@@ -124,7 +127,7 @@ const useStyles = makeStyles((theme) => ({
   companies: { paddingTop: 20 },
   filter_buttons: { padding: 30 },
   goButton: {
-    right: 10,
+    right: 30,
     position: "absolute",
   },
   goButtonContainer: {
@@ -287,6 +290,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
         className={`${showCategoryPopup} ${classes.popup}`}
       >
         <div
+          id="popup-container"
           className={classes.popup_container}
           onClick={(event: any) => {
             return;

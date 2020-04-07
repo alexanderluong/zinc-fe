@@ -21,27 +21,27 @@ export interface TransferListProps {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      margin: "auto"
+      margin: "auto",
     },
     button: {
       margin: theme.spacing(0.5, 0),
-      backgroundColor: "#d4d4d4"
-    }
+      backgroundColor: "#d4d4d4",
+    },
   })
 );
 
 function not(a: string[], b: string[]) {
-  return a.filter(value => b.indexOf(value) === -1);
+  return a.filter((value) => b.indexOf(value) === -1);
 }
 
 function intersection(a: string[], b: string[]) {
-  return a.filter(value => b.indexOf(value) !== -1);
+  return a.filter((value) => b.indexOf(value) !== -1);
 }
 
 const TransferList: React.FC<TransferListProps> = ({
   userToken,
   allSubscriptions,
-  userSubscriptions
+  userSubscriptions,
 }) => {
   const classes = useStyles();
   const [userSubs, setUserSubs] = React.useState<string[]>(
@@ -80,7 +80,7 @@ const TransferList: React.FC<TransferListProps> = ({
 
   // Return list A - list B
   const filterWords = (listA: string[], listB: string[]) => {
-    return listA.filter(word => listB.indexOf(word) === -1);
+    return listA.filter((word) => listB.indexOf(word) === -1);
   };
 
   async function onSubscribe() {
@@ -95,13 +95,16 @@ const TransferList: React.FC<TransferListProps> = ({
 
   function hideElement(id: string) {
     let element = document.getElementById(id);
-    if (element != null)
-      element.style.display = "none";
+    if (element != null) element.style.display = "none";
   }
 
   function successAlert() {
     return (
-      <Alert severity="success" id="success-alert" onClose={() => hideElement("success-alert")}>
+      <Alert
+        severity="success"
+        id="success-alert"
+        onClose={() => hideElement("success-alert")}
+      >
         Your subscriptions have been updated succesfully.
       </Alert>
     );
@@ -109,8 +112,12 @@ const TransferList: React.FC<TransferListProps> = ({
 
   function failureAlert() {
     return (
-      <Alert severity="error" id="error-alert" onClose={() => hideElement("error-alert")}>
-        An error has occurred. Your subscriptions were not updated succesfully. 
+      <Alert
+        severity="error"
+        id="error-alert"
+        onClose={() => hideElement("error-alert")}
+      >
+        An error has occurred. Your subscriptions were not updated succesfully.
       </Alert>
     );
   }
@@ -171,16 +178,14 @@ const TransferList: React.FC<TransferListProps> = ({
 
   return (
     <Grid container spacing={3} justify="center" alignItems="center">
-      <Grid item md={3} sm={2} xs='auto' className="alert">
-      </Grid>
+      <Grid item md={3} sm={2} xs="auto" className="alert"></Grid>
       <Grid item md={6} sm={8} xs={12} className="alert">
         {alert}
       </Grid>
-      <Grid item md={3} sm={2} xs='auto' className="alert">
-      </Grid>
+      <Grid item md={3} sm={2} xs="auto" className="alert"></Grid>
       <br />
       <Grid item>
-        <h2>All Subscriptions</h2>
+        <h2>All Categories</h2>
         {customList(allSubs)}
       </Grid>
       <Grid item>
@@ -228,10 +233,14 @@ const TransferList: React.FC<TransferListProps> = ({
         </Grid>
       </Grid>
       <Grid item>
-        <h2>Current Subscriptions</h2>
+        <h2>You're currently subscribed to...</h2>
         {customList(userSubs)}
       </Grid>
-      <Button className={classes.button} variant="outlined" onClick={onSubscribe}>
+      <Button
+        className={classes.button}
+        variant="outlined"
+        onClick={onSubscribe}
+      >
         <p className="button-text">Update</p>
       </Button>
     </Grid>

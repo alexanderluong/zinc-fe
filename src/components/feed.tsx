@@ -5,6 +5,7 @@ import "./feed.css";
 import FilterMenu from "./filter-menu";
 import { withRouter } from "react-router";
 import { RouteComponentProps } from "react-router";
+import ContactPopup from "./contact-popup";
 
 export interface FeedProps {
   tags: string[] | undefined;
@@ -43,6 +44,7 @@ const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
   });
 
   async function componentDidMount() {
+    console.log(process.env);
     setState(Object.assign({}, state, { isLoading: true }));
     let res = await fetchFeed(tags, companies, search);
     setState(Object.assign({}, state, { isLoading: false }));
@@ -64,6 +66,7 @@ const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
   if (state.feedError) {
     return (
       <React.Fragment>
+        <ContactPopup />
         <FilterMenu key={state.heading} />
 
         <div id="feed-container">
