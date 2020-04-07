@@ -17,7 +17,6 @@ export async function fetchFeed(
     if (tags[0] && companies[0]) req_url += "&";
     if (companies[0]) req_url += "&company=" + companies.join("&company=");
 
-    console.log(req_url);
     return await fetch(req_url, req);
   } catch (err) {
     // Process?
