@@ -11,6 +11,14 @@
   vertical-align: top;
 }
 
+@media only screen and (max-device-width: 640px) {
+  .article {
+    width: 100%;
+    margin: 0 auto !important;
+    margin-bottom: 20px !important;
+  }
+}
+
 .article-title {
   padding-top: 2px;
   padding-bottom: 2px;
@@ -44,6 +52,12 @@
 
 .filter-button:hover {
   background: rgb(241, 86, 144, 1) !important;
+}
+
+@media only screen and (max-device-width: 640px) {
+  #popup-container {
+    width: 100vw;
+  }
 }
 
 #feed-container {
