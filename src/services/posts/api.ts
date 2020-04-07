@@ -12,11 +12,12 @@ export async function fetchFeed(
     };
 
     // TODO fix this for multiple tags
-    let req_url = `${BASE_API}/feed?take=0&`;
-    if (tags[0]) req_url = req_url + "category=" + tags[0];
+    let req_url = `${BASE_API}/feed?take=0`;
+    if (tags.length !== 0) req_url += "&category=" + tags.join("&category=");
     if (tags[0] && companies[0]) req_url += "&";
-    if (companies[0]) req_url = req_url + "company=" + companies[0];
+    if (companies[0]) req_url += "&company=" + companies.join("&company=");
 
+    console.log(req_url);
     return await fetch(req_url, req);
   } catch (err) {
     // Process?

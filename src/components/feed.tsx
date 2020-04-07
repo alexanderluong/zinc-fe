@@ -39,6 +39,7 @@ const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
     isLoading: false,
     articles: [],
     heading: heading === "" ? "Latest Articles" : heading,
+    feedError: false,
   });
 
   async function componentDidMount() {
@@ -50,12 +51,29 @@ const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
       let body = await res.json();
       let articles = body.data.resources;
       setState(Object.assign({}, state, { articles: articles }));
-    } else alert("Try again");
+    } else {
+      setState(Object.assign({}, state, { feedError: true }));
+    }
   }
 
   useEffect(() => {
     componentDidMount();
   }, []);
+
+  if (state.feedError) {
+    return (
+      <React.Fragment>
+        <FilterMenu key={state.heading} />
+
+        <div id="feed-container">
+          <h2 className="section-heading" id="feed-start">
+            {state.heading}.
+          </h2>
+          Articles could not be loaded. Please try again later!
+        </div>
+      </React.Fragment>
+    );
+  }
 
   return (
     <React.Fragment>

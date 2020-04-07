@@ -212,8 +212,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
   const [menuAnchorClass, setMenuAnchorClass] = useState("");
 
   const addCategory = (category: string) => {
-    //setSelectedCategories([...selectedCategories, category]);
-    setSelectedCategories([category]);
+    setSelectedCategories([...selectedCategories, category]);
   };
 
   const removeCategory = (category: string) => {
@@ -223,8 +222,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
   };
 
   const addCompany = (company: string) => {
-    //setSelectedCompanies([...selectedCompanies, company]);
-    setSelectedCompanies([company]);
+    setSelectedCompanies([...selectedCompanies, company]);
   };
 
   const removeCompany = (company: string) => {
