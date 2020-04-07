@@ -39,7 +39,7 @@ const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
     isLoading: false,
     articles: [],
     heading: heading === "" ? "Latest Articles" : heading,
-    feedError: false
+    feedError: false,
   });
 
   async function componentDidMount() {
@@ -50,7 +50,6 @@ const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
     if (res.ok) {
       let body = await res.json();
       let articles = body.data.resources;
-      console.log(articles);
       setState(Object.assign({}, state, { articles: articles }));
     } else {
       setState(Object.assign({}, state, { feedError: true }));
@@ -95,7 +94,7 @@ const Feed: React.FC<FeedProps> = ({ tags, companies, search }) => {
               {new Intl.DateTimeFormat("en-US", {
                 month: "long",
                 day: "numeric",
-                year: "numeric"
+                year: "numeric",
               }).format(article.date)}
             </span>
             <div className="article-title">

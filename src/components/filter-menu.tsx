@@ -24,36 +24,36 @@ import { getCompanies } from "services/companies/api";
 
 export interface FilterMenuProps {}
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
     display: "none",
     [theme.breakpoints.up("sm")]: {
-      display: "block"
-    }
+      display: "block",
+    },
   },
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
+      backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(1),
-      width: "auto"
-    }
+      width: "auto",
+    },
   },
   searchIcon: {
     width: theme.spacing(7),
@@ -62,10 +62,10 @@ const useStyles = makeStyles(theme => ({
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   inputRoot: {
-    color: "inherit"
+    color: "inherit",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),
@@ -74,9 +74,9 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       width: 120,
       "&:focus": {
-        width: 200
-      }
-    }
+        width: 200,
+      },
+    },
   },
   bar: {
     boxShadow: "none",
@@ -84,14 +84,14 @@ const useStyles = makeStyles(theme => ({
     position: "absolute",
     justifyContent: "center",
     backgroundColor: "#ffffff",
-    color: "#000000"
+    color: "#000000",
   },
   anchor: {
     position: "fixed",
-    top: 50
+    top: 50,
   },
   menucontainer: {
-    position: "relative"
+    position: "relative",
   },
   popup: {
     position: "fixed",
@@ -101,7 +101,7 @@ const useStyles = makeStyles(theme => ({
     left: 0,
     backgroundColor: "rgb(0, 0, 0, 0.3)",
     zIndex: 99999,
-    display: "none"
+    display: "none",
   },
   popup_container: {
     backgroundColor: "white",
@@ -112,13 +112,13 @@ const useStyles = makeStyles(theme => ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    zIndex: 100000
+    zIndex: 100000,
   },
   show_category: {
-    display: "block"
+    display: "block",
   },
   show_company: {
-    display: "block"
+    display: "block",
   },
   categories: {},
   companies: { paddingTop: 20 },
@@ -126,18 +126,18 @@ const useStyles = makeStyles(theme => ({
   goButton: {
     right: 10,
     bottom: 10,
-    position: "absolute"
+    position: "absolute",
   },
   goButtonContainer: {
     display: "inline-block",
-    marginTop: 30
+    marginTop: 30,
   },
   closeButton: { right: 0, position: "absolute" },
   selectedCategory: {
-    border: "2px solid #f15690 !important"
+    border: "2px solid #f15690 !important",
   },
   selectedCompany: {
-    border: "2px solid #f15690 !important"
+    border: "2px solid #f15690 !important",
   },
   button: {
     variant: "contained",
@@ -153,11 +153,11 @@ const useStyles = makeStyles(theme => ({
     msUserSelect: "none",
     display: "inline-block",
     fontSize: "14px",
-    marginTop: 7
+    marginTop: 7,
   },
   formControl: {
-    margin: theme.spacing(3)
-  }
+    margin: theme.spacing(3),
+  },
 }));
 
 const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
@@ -171,7 +171,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
 
   const [state, setState] = useState({
     categories: emptyArray,
-    companies: emptyArray
+    companies: emptyArray,
   });
 
   async function componentDidMount() {
@@ -189,11 +189,11 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
       }
       categories = categories.filter((v, i) => categories.indexOf(v) === i);
 
-      companies = companies.filter(val => val); // Filter out empty string
+      companies = companies.filter((val) => val); // Filter out empty string
 
       setState({
         categories: categories,
-        companies: companies
+        companies: companies,
       });
     }
   }
@@ -216,7 +216,9 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
   };
 
   const removeCategory = (category: string) => {
-    setSelectedCategories(selectedCategories.filter(item => item !== category));
+    setSelectedCategories(
+      selectedCategories.filter((item) => item !== category)
+    );
   };
 
   const addCompany = (company: string) => {
@@ -224,7 +226,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
   };
 
   const removeCompany = (company: string) => {
-    setSelectedCompanies(selectedCompanies.filter(item => item !== company));
+    setSelectedCompanies(selectedCompanies.filter((item) => item !== company));
   };
 
   const handleCategoryFilterClick = (category: string) => {
@@ -248,7 +250,6 @@ const FilterMenu: React.FC<FilterMenuProps> = ({}) => {
       .getElementById("filter-menu-div")!
       .getBoundingClientRect();
     if (position.y < 50) {
-      console.log("hit top: " + position.y);
       setMenuAnchorClass(classes.anchor);
     } else if (position.y >= 50) {
       setMenuAnchorClass("");

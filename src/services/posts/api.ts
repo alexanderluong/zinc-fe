@@ -7,15 +7,17 @@ export async function fetchFeed(
 ): Promise<Response> {
   try {
     let req = {
-      method: "post",
+      method: "get",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        categories: tags,
-        companies: companies,
-      }),
     };
 
-    let req_url = `${BASE_API}/feed`;
+    // TODO fix this for multiple tags
+    let req_url = `${BASE_API}/feed?take=0`;
+    if (tags.length !== 0) req_url += "&category=" + tags.join("&category=");
+    if (tags[0] && companies[0]) req_url += "&";
+    if (companies[0]) req_url += "&company=" + companies.join("&company=");
+
+    console.log(req_url);
     return await fetch(req_url, req);
   } catch (err) {
     // Process?

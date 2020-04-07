@@ -19,6 +19,7 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({ systemState }) => {
   });
 
   async function componentDidMount() {
+    if (!systemState.loggedIn) return <Redirect to="/" />;
     setState(Object.assign({}, state, { isLoading: true }));
     let subscriptionsRes = await getSubscriptions();
     let userInfoRes = await getUserInfo(systemState.session);

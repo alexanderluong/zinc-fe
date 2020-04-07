@@ -18,7 +18,7 @@ export interface SubmitFormProps {
 }
 
 const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn, sessionToken }) => {
-  const [successMessage, setSuccessMessage] = useState(false);
+  const [successMessageTitle, setSuccessMessageTitle] = useState("");
   const [state, setState] = useState({
     isLoading: false,
     title: "",
@@ -83,7 +83,6 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn, sessionToken }) => {
     }
 
     setState(Object.assign({}, state, { isLoading: true }));
-    console.log("calling api with token: " + sessionToken);
     let res = await submitPost(
       state.title,
       state.uri,
@@ -93,7 +92,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn, sessionToken }) => {
     setState(Object.assign({}, state, { isLoading: false }));
     // Handle
     if (res.ok) {
-      setSuccessMessage(true);
+      setSuccessMessageTitle(state.title);
       clearForm();
       return;
     } else {
@@ -118,8 +117,12 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ loggedIn, sessionToken }) => {
   else {
     return (
       <div id="form-submission">
-        {successMessage ? (
-          <Alert severity="success">Post successfully submitted!</Alert>
+        {successMessageTitle !== "" ? (
+          <Alert severity="success">
+            Your post "{successMessageTitle}" has been successfully submitted!
+            Upon admin approval, your post will appear on the feed of Vancity
+            Tech.
+          </Alert>
         ) : (
           ""
         )}

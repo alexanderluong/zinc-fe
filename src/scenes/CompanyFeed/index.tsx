@@ -8,12 +8,12 @@ export interface CompanyFeedProps {
   key: any;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   feedcontainer: {
     boxShadow: "none",
     top: 50,
-    position: "relative"
-  }
+    position: "relative",
+  },
 }));
 
 interface ParamTypes {
@@ -21,7 +21,7 @@ interface ParamTypes {
 }
 
 export const CompanyFeed: React.FC<CompanyFeedProps> = ({}) => {
-  console.log(useParams<ParamTypes>());
+  //console.log(useParams<ParamTypes>());
   const { company } = useParams<ParamTypes>();
   const [feed_tag, setTag] = useState([]);
   const [company_params, setCompany] = useState([company]);
