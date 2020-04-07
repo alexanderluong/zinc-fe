@@ -1,5 +1,6 @@
 import React from "react";
 import "../assets/banner.css";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 export interface BannerProps {
   loggedIn: boolean;
@@ -48,6 +49,14 @@ const Banner: React.FC<BannerProps> = ({ loggedIn, firstName }) => {
               development community by fostering an ecosystem for the Vancouver
               tech scene. Find posts written by top tech companies in the area!
             </div>
+            {!loggedIn ? (
+              <div className="scroll-indication">
+                <p>View feed</p>
+                <ExpandMoreIcon />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
