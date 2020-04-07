@@ -42,16 +42,19 @@ export const PlainFeed: React.FC<PlainFeedProps> = ({ params }) => {
 
   let paramsCategories = getQueryVariable("categories");
   let paramsCompanies = getQueryVariable("companies");
+  let paramsSearch = getQueryVariable("title");
 
   let categories =
     paramsCategories !== undefined ? paramsCategories.split(",") : [];
   let companies =
     paramsCompanies !== undefined ? paramsCompanies.split(",") : [];
 
+  console.log(paramsSearch);
+
   return (
     <React.Fragment>
       <div className={classes.feedcontainer}>
-        <Feed tags={categories} companies={companies} search={search} />
+        <Feed tags={categories} companies={companies} search={paramsSearch} />
       </div>
     </React.Fragment>
   );
