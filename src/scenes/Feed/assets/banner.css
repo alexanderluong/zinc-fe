@@ -8,6 +8,12 @@
   }
 }
 
+@media only screen and (max-width: 640px) {
+  .logged-in-class {
+    height: 70vh !important;
+  }
+}
+
 
 #banner {
   color: white;
@@ -97,17 +103,24 @@
 }
 
 @media only screen and (max-width: 700px) {
+  .emphasis.translu.play-font {
+    font-size: 36px !important;
+  }
+
   #banner {}
 
   #banner-container {}
 
   .banner-title-text {
-    font-size: 36px;
-    line-height: 0.4;
+    font-size: 28px;
+    line-height: 0.9;
   }
 
   .banner-descr-text {
+    margin-top: 20px;
     font-size: 16px;
+    min-width: 0px;
+    width: 80%;
   }
 }
 

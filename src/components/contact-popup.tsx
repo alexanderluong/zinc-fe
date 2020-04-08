@@ -15,13 +15,13 @@ export interface ContactPopupState {}
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     icon: { position: "relative", margin: "2px", display: "block" },
-    popup: { zIndex: 9999999 },
+    popup: { zIndex: 999 },
     popup_container: {
       display: "block",
       position: "fixed",
       bottom: "40px",
       right: "40px",
-      zIndex: 9999999,
+      zIndex: 999,
     },
   })
 );
