@@ -39,7 +39,7 @@
   font-family: "Tajawal", sans-serif;
   font-weight: 800;
   color: #446baa;
-  font-size: 18px;
+  font-size: 1.3em;
 }
 
 .article-title a:hover {
@@ -47,7 +47,7 @@
 }
 
 .description {
-  font-size: 12px;
+  font-size: 1em;
   color: #f15690;
 }
 
