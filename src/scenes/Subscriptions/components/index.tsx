@@ -54,7 +54,7 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({ systemState }) => {
         </h2>
         <p>
           Sign up to receive weekly email updates for any new approved posts for
-          your categories.
+          the categories that you've subscribed to.
         </p>
         <TransferList
           userToken={systemState.session}
