@@ -52,7 +52,9 @@ const ContactPopup: React.FC<ContactPopupProps> = ({}) => {
               <RssFeedIcon />
             </IconButton>
           </HtmlTooltip>
+        </a>
 
+        <a className={classes.popup} href={`${email_link}`}>
           <HtmlTooltip
             placement="left"
             arrow
