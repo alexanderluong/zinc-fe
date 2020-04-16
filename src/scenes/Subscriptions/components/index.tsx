@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getSubscriptions } from "services/categories/api";
-import { getUserInfo } from "services/users/api"
+import { getUserInfo } from "services/users/api";
 import { SystemState } from "store/system/types";
 import { Redirect } from "react-router-dom";
 import TransferList from "../components/transferlist";
@@ -15,7 +15,7 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({ systemState }) => {
   const [state, setState] = useState({
     isLoading: false,
     allSubscriptions: [],
-    userSubscriptions: []
+    userSubscriptions: [],
   });
 
   async function componentDidMount() {
@@ -30,9 +30,14 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({ systemState }) => {
       let userInfoBody = await userInfoRes.json();
       let userSubscriptions = userInfoBody.data.subscriptions;
       let categories = subscriptionBody.data.resources;
-      setState(Object.assign({}, state, { allSubscriptions: categories, userSubscriptions: userSubscriptions }));
+      setState(
+        Object.assign({}, state, {
+          allSubscriptions: categories,
+          userSubscriptions: userSubscriptions,
+        })
+      );
     } else {
-      alert("Subscriptions could not be fetched!")
+      alert("Subscriptions could not be fetched!");
     }
   }
 
@@ -47,7 +52,15 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({ systemState }) => {
         <h2 className="section-heading" id="subscriptions-start">
           Manage Subscriptions.
         </h2>
-        <TransferList userToken={systemState.session} allSubscriptions={state.allSubscriptions} userSubscriptions={state.userSubscriptions}/>
+        <p>
+          Sign up to receive weekly email updates for any new approved posts for
+          your categories.
+        </p>
+        <TransferList
+          userToken={systemState.session}
+          allSubscriptions={state.allSubscriptions}
+          userSubscriptions={state.userSubscriptions}
+        />
       </div>
     );
 };
