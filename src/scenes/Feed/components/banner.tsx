@@ -53,7 +53,7 @@ const Banner: React.FC<BannerProps> = ({ loggedIn, firstName }) => {
             </div>
             {!loggedIn ? (
               <div className="scroll-indication">
-                <p>View feed</p>
+                <p>Scroll down to see what’s happening in Vancouver Tech!</p>
                 <ExpandMoreIcon />
               </div>
             ) : (
