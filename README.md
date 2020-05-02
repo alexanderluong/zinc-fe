@@ -12,3 +12,7 @@
    - Ensure that `REACT_APP_ADMIN_DASHBOARD_LINK` is the correct link to the admin dashboard.
 4. Start the frontend with `npm start`
 5. The frontend should be running at the localhost port specified in the .env file. For example, `localhost:3002`.
+
+### Frontend Features 
+
+![main page demo]("demo-main.gif")
